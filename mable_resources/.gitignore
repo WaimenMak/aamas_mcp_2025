@@ -1,0 +1,25 @@
+# Exclude Python cache files and directories
+__pycache__/
+*.py[cod]
+
+# Exclude pickle files
+*.pkl
+
+# Exclude CSV files
+*.csv
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+
+# PyCharm project files
+.idea/
+
+# Logs and temporary files
+*.log
+*.tmp

@@ -14,9 +14,9 @@ class Companyn(TradingCompany):
         logger.warning("pre_inform")
         _ = self.propose_schedules(trades)
 
-    def inform(self, trades):
-        pass
-
-    def propose_schedules(self, trades):
-        schedules = {}
-        scheduled_trades = []
+    # def inform(self, trades):
+    #     pass
+    #
+    # def propose_schedules(self, trades):
+    #     schedules = {}
+    #     scheduled_trades = []

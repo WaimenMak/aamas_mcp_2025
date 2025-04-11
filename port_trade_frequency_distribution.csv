@@ -1,0 +1,1250 @@
+Port,SupplyDemand,Num Samples
+Aberdeen-f8ea5ddd09c3,Demand,12
+Aberdeen-f8ea5ddd09c3,Supply,63
+Abidjan-ef95aea8399b,Demand,151
+Abidjan-ef95aea8399b,Supply,230
+Abkatun Terminal-e054acbce2af,Supply,522
+Abu Al Bu Khoosh-bf7cab492b9b,Supply,41
+Acajutla-9e6d3e562992,Demand,17
+Ad Dakhla-e4ef831f6712,Supply,12
+Aden-0150d4fee758,Demand,10
+Afia Terminal-39319bbba149,Supply,82
+Agioi Theodoroi-7d3292626911,Demand,436
+Agioi Theodoroi-7d3292626911,Supply,122
+Aguadulce-f392c2c62fc6,Demand,102
+Aguadulce-f392c2c62fc6,Supply,103
+Ain Sukhna-1a3e7c53d691,Demand,390
+Ain Sukhna-1a3e7c53d691,Supply,46
+Akita-219577441025,Demand,11
+Al Basrah-1fc976f51917,Demand,18
+Al Basrah-1fc976f51917,Supply,4913
+Al Muajjiz Terminal-e69352f09461,Demand,147
+Al Muajjiz Terminal-e69352f09461,Supply,425
+Al Rayyan Terminal-63332acc77de,Supply,12
+Al Shaheen-a874751f27d5,Demand,15
+Al Shaheen-a874751f27d5,Supply,768
+Alexandria-25fd86a43725,Supply,26
+Algeciras-f1a4cd999637,Demand,669
+Algeciras-f1a4cd999637,Supply,202
+Aliaga-21b1378cef5b,Demand,590
+Aliaga-21b1378cef5b,Supply,30
+Alliance-c82ad425b780,Demand,31
+Alliance-c82ad425b780,Supply,17
+Ama-34f12b4c6a17,Demand,10
+Ama-34f12b4c6a17,Supply,18
+Ambelaki-f95bf05978df,Demand,69
+Ambelaki-f95bf05978df,Supply,102
+Amlwch-6eee8273399a,Demand,21
+Amlwch-6eee8273399a,Supply,42
+Amsterdam-a65eb5b59856,Supply,16
+Amuay Bay-5e4554330016,Demand,292
+Amuay Bay-5e4554330016,Supply,481
+An Ping-e585fb95bd8e,Demand,20
+Angra Dos Reis-d87b536f17a4,Demand,1116
+Angra Dos Reis-d87b536f17a4,Supply,823
+Anholt-246b0793176c,Demand,81
+Anholt-246b0793176c,Supply,12
+Anse Tombladora-1a2328b8249e,Supply,11
+Antan-a36fe373d14d,Supply,66
+Antifer-d5d78c86794b,Demand,204
+Antwerp-03800591867c,Demand,152
+Antwerp-03800591867c,Supply,169
+Anyer Lor-41852ba9c84a,Demand,14
+Aqaba-e84221d81a14,Demand,139
+Ardjuna-d97dccde6b8e,Supply,49
+Ardrossan-8bbd0ea8f7b5,Demand,49
+Ardrossan-8bbd0ea8f7b5,Supply,18
+Argostolion-b076142a4144,Supply,16
+Arraial do Cabo-b054cfd95b71,Demand,10
+Arraial do Cabo-b054cfd95b71,Supply,471
+Arrecife-51da4f6c5723,Demand,10
+Arzew-4edb5359fa3e,Supply,487
+Ash Shihr-578880cc7d3c,Supply,16
+Ashburton-c47dc19835ce,Supply,12
+Ashkelon-fd167dd07904,Demand,56
+Ashtart-1a30d67c61b9,Supply,18
+Asnaes-db5dc2dfd9d6,Supply,43
+Aspropyrgos-24a155d8c02c,Demand,65
+Assaluyeh-6ac34a3404e7,Demand,23
+Assaluyeh-6ac34a3404e7,Supply,276
+Atapupu-01acb336185f,Supply,10
+Augusta-facbcc9badd3,Demand,669
+Augusta-facbcc9badd3,Supply,189
+Avalon-9dcfdaa2a4cd,Demand,832
+Avalon-9dcfdaa2a4cd,Supply,1086
+Az Zawiyah-55a0bc1ebc27,Demand,23
+Az Zawiyah-55a0bc1ebc27,Supply,201
+Bahia Blanca-40a025c02835,Demand,79
+Bahia Blanca-40a025c02835,Supply,61
+Bahia Solano-723a94ced88c,Demand,43
+Bahia Solano-723a94ced88c,Supply,50
+Baia Do Ambriz-f4742dd26d85,Supply,13
+Baia dos Tigres-486c1244464d,Supply,27
+Bajo Grande-43af8c97bb52,Supply,167
+Balboa-9c622572e868,Demand,16
+Balhaf-acb13478c949,Supply,19
+Balikpapan-5fa8d362a22a,Demand,176
+Balikpapan-5fa8d362a22a,Supply,66
+Balongan-1fd4b61205b9,Demand,182
+Balongan-1fd4b61205b9,Supply,51
+Ban Ao Udom-d8ec7fa8f70d,Demand,108
+Ban Ao Udom-d8ec7fa8f70d,Supply,43
+Bandar Abbas-ce830646c7b4,Demand,249
+Bandar Abbas-ce830646c7b4,Supply,21
+Bandar E Mah Shahr-b3a8f44bd40a,Supply,61
+Bandar Khomeyni-469b12bf5317,Demand,10
+Bandar Khomeyni-469b12bf5317,Supply,224
+Banghazi-8cfcf0a3b699,Supply,15
+Baniyas-2767f0e61d83,Demand,28
+Bantry-a03eff11cb26,Demand,11
+Bantry-a03eff11cb26,Supply,13
+Barbate-dd2d95f36a72,Supply,11
+Barhoft-78b54c170ecc,Demand,61
+Barhoft-78b54c170ecc,Supply,31
+Barrow Island-b4dc6226b554,Supply,44
+Bashayer-5e903d6d5c2c,Supply,239
+Bata-b6159c5149fa,Supply,70
+Bataan-377c90243a7a,Demand,101
+Bataan-377c90243a7a,Supply,10
+Batangas City-599a4ab12ead,Demand,33
+Batangas City-599a4ab12ead,Supply,14
+Baton Rouge-1866b408e4d1,Demand,276
+Baton Rouge-1866b408e4d1,Supply,40
+Batu Ampar-c13dce863ef5,Demand,13
+Batu Pahat-a352e0bacf9e,Demand,57
+Batu Pahat-a352e0bacf9e,Supply,23
+Batumskaya Bukhta-673ddbe4e080,Supply,57
+Bayovar-c615c58ed79a,Supply,19
+Baytown-0bbc5d394cf2,Demand,702
+Baytown-0bbc5d394cf2,Supply,14
+Bayuquan-2d56aa4f17ec,Demand,522
+Bayuquan-2d56aa4f17ec,Supply,53
+Beaumaris-08ae971b5c71,Demand,14
+Beaumaris-08ae971b5c71,Supply,30
+Bedhampton-cd5a6e3297a6,Demand,41
+Beilun-16a7df7c1e03,Demand,1804
+Beilun-16a7df7c1e03,Supply,28
+Bejaia-27cbf19e9922,Supply,111
+Belanak Terminal-fdbee8594eac,Supply,20
+Belawan-83191c2a3b22,Demand,31
+Belawan-83191c2a3b22,Supply,16
+Belle Chasse-d4dbce12087d,Demand,156
+Belle Chasse-d4dbce12087d,Supply,66
+Bellingham-82d03680a0b3,Demand,56
+Bellingham-82d03680a0b3,Supply,24
+Benchamas-12dbefd04f36,Supply,13
+Benicia-2b89d641c94e,Demand,138
+Benicia-2b89d641c94e,Supply,31
+Beryl Terminal-fd1acfcd9ad2,Supply,485
+Beykoz-753956718b0e,Demand,16
+Beykoz-753956718b0e,Supply,129
+Bilbao-8ca9c71dff9e,Demand,648
+Bilbao-8ca9c71dff9e,Supply,12
+Bin Qasim-80d463699f40,Demand,152
+Bin Qasim-80d463699f40,Supply,18
+Bintulu-9138ac0a6d36,Supply,58
+Bizerte-7acaf9640d06,Demand,83
+Bizerte-7acaf9640d06,Supply,10
+Bonny-775a4af5a5d0,Supply,482
+Boothville-58c144c740f9,Demand,11
+Borssele-de0808e9fb6b,Demand,13
+Botany Bay-e95064e7be7a,Demand,39
+Boulogne-sur-mer-24b4a8d53d38,Demand,49
+Bourgas-16d93a3bfdd3,Demand,436
+Bourgas-16d93a3bfdd3,Supply,14
+Bouri-58e9b14b246d,Supply,117
+Bozcaada-66352f54629d,Demand,193
+Bozcaada-66352f54629d,Supply,118
+Braithwaite-b1d8281d4bdb,Demand,53
+Braithwaite-b1d8281d4bdb,Supply,25
+Brass River-514a6c5295d8,Supply,468
+Bridlington-7a14825d8088,Demand,10
+Brisbane-2fb2da59f3d2,Demand,391
+Brofjorden-8f0115714312,Demand,489
+Brownsville-03c37f9d341d,Supply,29
+Brunsbuttel-04769aa33742,Demand,213
+Buenos Aires-5bd47f0ab4c0,Demand,139
+Bukhta Vanina-3afcf26fbc36,Supply,38
+Bullen Baai-4c584f3701f5,Demand,498
+Bullen Baai-4c584f3701f5,Supply,305
+Burnside-9cb1bffd1db9,Demand,17
+Busan-de280da8be4e,Demand,11
+Bushehr-f81f1081948c,Supply,25
+Butinge Terminal-f297ef573599,Demand,505
+Cabinda-459ca6a07faf,Supply,678
+Calais-37c741d0d905,Demand,39
+Caleta Cordova-d38c32cf43d2,Supply,652
+Caleta Olivia-e52e82965ea8,Supply,413
+Caleta Paula-700d0c4f0c4f,Supply,33
+Callao-324582de5e88,Demand,62
+Callao-324582de5e88,Supply,17
+Canuku Terminal-f70399be83e6,Supply,1170
+Caofeidian-29498c3cc308,Demand,399
+Caofeidian-29498c3cc308,Supply,133
+Cap Lopez-96c15e5e9e71,Supply,196
+Cape Comorin-a3ddd23d6cf8,Demand,13
+Cape Comorin-a3ddd23d6cf8,Supply,13
+Cape Henlopen-e6bb66ba06d7,Demand,31
+Cape Henlopen-e6bb66ba06d7,Supply,27
+Cape May-485c180b3d95,Demand,111
+Cape May-485c180b3d95,Supply,184
+Cape Town-991a024cbdf1,Supply,18
+Car Nicobar-b5a690362da1,Demand,11
+Car Nicobar-b5a690362da1,Supply,21
+Cartagena-4232156d91ca,Supply,13
+Cartagena-c83bf0dcc291,Demand,117
+Cartagena-c83bf0dcc291,Supply,60
+Castellon-08c2845d53fd,Demand,255
+Castries-21a3c522ed78,Demand,13
+Castries-21a3c522ed78,Supply,21
+Cayo Arcas Terminal-b6b6e0d459e4,Demand,95
+Cayo Arcas Terminal-b6b6e0d459e4,Supply,719
+Ceuta-e2de790bdd0f,Demand,25
+Ceuta-e2de790bdd0f,Supply,41
+Ceyhan-3b530c868db0,Demand,100
+Ceyhan-3b530c868db0,Supply,2550
+Chalmette-195ea9ec9b9d,Demand,164
+Changxingdao-5c16d1a2a8e9,Demand,361
+Changxingdao-5c16d1a2a8e9,Supply,18
+Charco Azul-07e1063ddabf,Demand,15
+Charco Azul-07e1063ddabf,Supply,148
+Chennai-b824911cec6f,Demand,372
+Cherbourg-61cd5e165c61,Demand,16
+Cherry Point-69fb11f0514e,Demand,368
+Cherry Point-69fb11f0514e,Supply,34
+Chiba-6cce4016be7b,Demand,1008
+Chiba-6cce4016be7b,Supply,11
+Chiriqui Grande-4479d7260a3a,Demand,318
+Chiriqui Grande-4479d7260a3a,Supply,18
+Chisepo-478015b7d098,Demand,76
+Chisepo-478015b7d098,Supply,44
+Chittagong-68f7430b285f,Demand,55
+Cienfuegos-b7bb7d28b57f,Demand,12
+Cigading-b43a4e1b01ee,Demand,12
+Cinta-3a938c039496,Supply,50
+Coatzacoalcos-230dbf9a65a3,Demand,12
+Coatzacoalcos-230dbf9a65a3,Supply,635
+Cockatoo Island-e15fd694df57,Supply,19
+Coden-32c1141edbaa,Demand,102
+Coden-32c1141edbaa,Supply,48
+Collo-118a9d1325e2,Supply,10
+Colombo-04104bbca75f,Demand,122
+Colombo-04104bbca75f,Supply,19
+Colon-c99513f17c23,Demand,32
+Colon-c99513f17c23,Supply,74
+Come By Chance Harbor-84989c92b9a6,Demand,182
+Come By Chance Harbor-84989c92b9a6,Supply,33
+Comodoro Rivadavia-9d8471f8614d,Demand,15
+Comodoro Rivadavia-9d8471f8614d,Supply,114
+Conchan-b7b91348d404,Demand,24
+Constantza-8640b9ce4f82,Demand,222
+Constantza-8640b9ce4f82,Supply,19
+Cork-5b70e0e2edb0,Demand,17
+Cork-5b70e0e2edb0,Supply,27
+Corpus Christi-7a30d31f121f,Demand,728
+Corpus Christi-7a30d31f121f,Supply,621
+Cossack-71584b369f53,Supply,39
+Covenas-76285da2ae54,Demand,30
+Covenas-76285da2ae54,Supply,1252
+Cowes Harbor-492fd1fcdad3,Demand,18
+Cristobal-7a0a146c6f4c,Demand,19
+Cyrus Terminal-7929470e34f7,Supply,80
+Daesan-5e616be98516,Demand,901
+Daesan-5e616be98516,Supply,32
+Daishan-8d1d2ae11d71,Demand,49
+Daishan-8d1d2ae11d71,Supply,28
+Dakar-c995aa8a2b7f,Demand,100
+Dakar-c995aa8a2b7f,Supply,17
+Dalian-641923403d46,Demand,1389
+Dalian-641923403d46,Supply,449
+Dampier-0770da9372ac,Supply,170
+Dar-es-Salaam-9761ca3cc83c,Demand,28
+Das Island-6bbe24b74298,Demand,10
+Das Island-6bbe24b74298,Supply,1444
+Davant-8ed4143ccb1f,Demand,31
+Davant-8ed4143ccb1f,Supply,22
+De Kastri-152e8b122f41,Supply,729
+Deendayal (Kandla)-cb8c572f1f7c,Demand,77
+Deendayal (Kandla)-cb8c572f1f7c,Supply,25
+Delair-c0288683f54a,Demand,16
+Delair-c0288683f54a,Supply,11
+Delaware-b7084da9a089,Demand,118
+Delaware-b7084da9a089,Supply,10
+Delma-ebf81718f685,Demand,12
+Delma-ebf81718f685,Supply,108
+Destrehan-3e0eb54ab1e0,Demand,49
+Destrehan-3e0eb54ab1e0,Supply,77
+Dibba-63aec6d8d867,Supply,28
+Djeno-e44e1a5065f3,Supply,568
+Doha-334c3d200e3d,Supply,11
+Donges-29e6374381eb,Demand,462
+Donges-29e6374381eb,Supply,10
+Dongjiakou-192facca7a0e,Demand,595
+Dongjiakou-192facca7a0e,Supply,57
+Dongying-5b327b4206b2,Demand,186
+Dongying-5b327b4206b2,Supply,193
+Dortyol-c92e8c6577c4,Supply,17
+Dos Bocas-51ae87032a0e,Demand,19
+Dos Bocas-51ae87032a0e,Supply,1147
+Dubai-dd89e73f6ea8,Demand,125
+Dubai-dd89e73f6ea8,Supply,201
+Dumai-2e7d15752dc3,Demand,68
+Dumai-2e7d15752dc3,Supply,321
+Dung Quat-6cad81c97377,Demand,44
+Dunkirk-b1108d988a99,Demand,25
+Durban-2c15a692c2d1,Demand,628
+Durban-2c15a692c2d1,Supply,15
+El Hamra Oil Terminal-c68ec7f166d6,Supply,206
+El Palito-45b3dde23b18,Demand,169
+El Palito-45b3dde23b18,Supply,87
+El Segundo-44e37d0a9803,Demand,745
+El Segundo-44e37d0a9803,Supply,38
+El Tablazo-8969089cb572,Supply,15
+El-adabiya-794d933b1efe,Demand,11
+Elevsis-fbce199af529,Demand,46
+Ennore-c2e869988696,Demand,17
+Ensted-599085667443,Supply,34
+Erawan Terminal-18706d4ae0a3,Supply,13
+Es Sider-7b388828f370,Supply,206
+Escombreras-8ff2f5149d51,Demand,738
+Escombreras-8ff2f5149d51,Supply,13
+Escravos-d10fa4d128c1,Supply,629
+Esmeraldas-2296c98900e5,Supply,912
+Espevik-a06db0b14de5,Supply,11
+Everingen-b13bb9bb37c6,Supply,11
+Exmouth-8319bd3b7298,Supply,127
+Eyemouth-c92fdb008442,Supply,20
+Ez Zueitina-df251b334fca,Supply,118
+Falconara-dded61335358,Demand,208
+Fanara-d8097cc33917,Demand,25
+Fanara-d8097cc33917,Supply,15
+Fangcheng-e432e416e141,Demand,141
+Fangcheng-e432e416e141,Supply,170
+Fateh Terminal-07b4753abaf1,Supply,157
+Fawley-a9deff035346,Demand,556
+Fawley-a9deff035346,Supply,11
+Fedje-7d42a4d15909,Supply,34
+Felton-75d2c607efac,Demand,27
+Ferndale-202bfe1fc498,Demand,166
+Ferndale-202bfe1fc498,Supply,32
+Ferrol-95cf5ab44ffa,Demand,15
+Ferrol-95cf5ab44ffa,Supply,13
+Finnart Oil Terminal-68b4bb1f9d17,Demand,177
+Forcados-344ee102e813,Supply,743
+Fort De France-e336039d97b0,Demand,42
+Fortaleza-5baebe8b4683,Demand,41
+Forties Terminal-758cde43cb57,Supply,34
+Fos-a89094aa52c0,Demand,1317
+Fos-a89094aa52c0,Supply,41
+Fraserburgh Harbor-6dfcea86689c,Supply,130
+Fredericia-2ce2fe57cad8,Supply,158
+Frederikshavn-09d8333af9ca,Demand,154
+Frederikshavn-09d8333af9ca,Supply,200
+Freeport-3415bc29dc8c,Demand,414
+Freeport-3415bc29dc8c,Supply,229
+Freeport-fd2e0532af21,Demand,422
+Freeport-fd2e0532af21,Supply,341
+Fremantle-4a5c2747a538,Demand,72
+Fremantle-4a5c2747a538,Supply,45
+Fuik Bay-bf0ab432d8f5,Demand,20
+Fuik Bay-bf0ab432d8f5,Supply,26
+Fujairah-ca26fade3b91,Demand,2022
+Fujairah-ca26fade3b91,Supply,3839
+Fulmar Terminal-dd94ed4fe8fa,Supply,31
+Galeota Point-0c028f687ae9,Supply,44
+Galle Harbor-5d159c090d3b,Demand,64
+Galle Harbor-5d159c090d3b,Supply,82
+Galtby-cc4d98f09f61,Demand,113
+Galveston-80916f3912d8,Demand,2618
+Galveston-80916f3912d8,Supply,3123
+Gamba-1049c893b584,Supply,166
+Ganyu-b9e49bd08429,Demand,24
+Garyville-04c030e40e80,Demand,38
+Gdansk-34ceedb9667f,Demand,566
+Gdansk-34ceedb9667f,Supply,24
+Gedser-86f23e05be91,Demand,42
+Gedser-86f23e05be91,Supply,31
+Geelong-80cda7bf3ed2,Demand,335
+Geelong-80cda7bf3ed2,Supply,14
+Geisum Terminal-715734f5be45,Demand,50
+Gelendzhik-4f847e0e589a,Supply,10
+Gelibolu-15f5e85c3281,Demand,10
+Gelibolu-15f5e85c3281,Supply,12
+Genoa-65f8cdf3c546,Demand,633
+Genoa-65f8cdf3c546,Supply,16
+George Town-1221ebf98ef5,Demand,11
+Gibraltar-1fcc4603c786,Demand,122
+Gibraltar-1fcc4603c786,Supply,379
+Gombe Beta Terminal-c62d043fa5f7,Supply,95
+Good Hope-431d3b6c8970,Demand,406
+Good Hope-431d3b6c8970,Supply,14
+Gorm Terminal-6743587d7141,Supply,55
+Gothenburg-de0033e99214,Demand,569
+Gothenburg-de0033e99214,Supply,76
+Goto Oil Terminal-bc3f343bfee1,Demand,286
+Goto Oil Terminal-bc3f343bfee1,Supply,135
+Gramercy-f85565631382,Demand,37
+Gramercy-f85565631382,Supply,50
+Grand Cul De Sac Bay-8f457aa4d65c,Demand,78
+Grand Cul De Sac Bay-8f457aa4d65c,Supply,85
+Great Yarmouth-b48776078bc6,Demand,124
+Great Yarmouth-b48776078bc6,Supply,80
+Greenville-91bdcff51488,Supply,12
+Gretna-b35f7810ad7c,Supply,28
+Grimsby-d6f49c2e1bad,Demand,703
+Grimsby-d6f49c2e1bad,Supply,80
+Gryphon Terminal-c60fa19a5389,Supply,290
+Guamare Oil Terminal-0c8a73f24606,Supply,57
+Guaranao Bay-80e98c0db688,Demand,22
+Guaranao Bay-80e98c0db688,Supply,21
+Guayanilla-422800078285,Demand,27
+Guiria-f17a49448be0,Supply,12
+Gulei-276457416195,Demand,41
+Gulf Gateway-e0932031b5b6,Demand,183
+Gulf Gateway-e0932031b5b6,Supply,159
+Gullfaks Terminal-58491a793280,Supply,293
+Gunsan-6a244100846b,Demand,41
+Gwadar-38dd638e81c2,Demand,15
+Gwangyang-11ecb2ca4f7f,Demand,1131
+Gwangyang-11ecb2ca4f7f,Supply,248
+Haifa-3a42a4f6784e,Demand,14
+Halsskov-67355b8e1ffe,Demand,10
+Halul-b31f44d24105,Supply,423
+Hambantota-597b12547c60,Demand,40
+Hambantota-597b12547c60,Supply,50
+Hamble-253db081b2ef,Supply,48
+Hamburg-063772b8f28b,Demand,80
+Hamriyah Free Zone-2f684e795984,Demand,14
+Hamriyah Free Zone-2f684e795984,Supply,29
+Hartlepool-3ef4e9aa5ca8,Supply,37
+Hastings-13abbef165b1,Demand,76
+Hastings-89c8c399cf20,Supply,32
+Hasvik-6cb08609d706,Supply,86
+Hazira-5289b55a7b2a,Supply,17
+Heidrun Field-f189358c23bc,Supply,309
+Helgoland-c47a1ee22838,Demand,108
+Helgoland-c47a1ee22838,Supply,149
+Hempstead Harbour-2bf2cd41bbbb,Supply,24
+Hidaka-780e273f0325,Demand,13
+Hitakatsu-c69c95ac77ac,Demand,77
+Hitakatsu-c69c95ac77ac,Supply,48
+Hong Kong-0c90bc71ba92,Demand,390
+Hong Kong-0c90bc71ba92,Supply,90
+Honningsvag-7b9b43d5fd04,Demand,55
+Honningsvag-7b9b43d5fd04,Supply,42
+Honolulu-c946080c104a,Demand,42
+Honolulu-c946080c104a,Supply,12
+Hososhima Ko-a8c3b1f57b21,Demand,10
+Hound Point-199882e34b06,Supply,537
+Houston-453dd058edad,Demand,1336
+Houston-453dd058edad,Supply,1402
+Huanghua-501489ae5cef,Demand,129
+Huanghua-501489ae5cef,Supply,55
+Hudson Terminal-6bffa5cfeb7a,Supply,16
+Huelva-8b415901e849,Demand,473
+Huizhou Terminal-5f8d257641f5,Supply,16
+Huizhou-59dc66ffb6ae,Demand,932
+Huizhou-59dc66ffb6ae,Supply,167
+Huludao Gang-a3da10e3c819,Demand,11
+Huludao Gang-a3da10e3c819,Supply,10
+Icdas-bdb5025eb89f,Demand,144
+Icdas-bdb5025eb89f,Supply,264
+Imam Hasan-5e2120e8c00f,Supply,29
+Immingham-03154ce774bb,Demand,372
+Incheon-e1adfc095464,Demand,197
+Irako-640c479c6310,Demand,59
+Ishigaki-db841a8241a4,Demand,20
+Isla Taboguilla-18cc376c453a,Demand,91
+Isla Taboguilla-18cc376c453a,Supply,45
+Istanbul-5b38615ba682,Demand,51
+Istanbul-5b38615ba682,Supply,81
+Itaqui-c457a428c3f7,Demand,26
+Iwakuni Ko-3ec9f7fd5723,Demand,362
+Izuhara-ee439c3cbfc0,Demand,11
+Jakarta-9cac7206c0ef,Demand,42
+Jakarta-9cac7206c0ef,Supply,33
+Jask-1817bd28cf9f,Demand,18
+Jask-1817bd28cf9f,Supply,18
+Jawaharlal Nehru-61a68ba39082,Supply,14
+Jazireh-ye Sirri-ae52aab2f31b,Supply,66
+Jebel Ali-c5a22157b696,Demand,164
+Jebel Dhanna-4c73169e04bb,Supply,819
+Jeddah-17dce7ee2e7d,Demand,327
+Jeddah-17dce7ee2e7d,Supply,93
+Jeju-04d83fba8e92,Demand,23
+Jieh-a3c0fd89df46,Demand,18
+Jing Tang-d63c27036294,Demand,62
+Jing Tang-d63c27036294,Supply,173
+Jinghai-cc7e1300b78d,Supply,37
+Jinzhou Wan-15248fa643b9,Demand,200
+Jinzhou Wan-15248fa643b9,Supply,304
+Jizan-2b3fce189dd6,Demand,31
+Jizan-2b3fce189dd6,Supply,13
+Jose Ignacio-5cdb9d8087e6,Demand,91
+Jounieh-6929b1988d12,Demand,25
+Kalaeloa Barbers Point Harbor-fb6ec6d1b3e5,Demand,286
+Kalaeloa Barbers Point Harbor-fb6ec6d1b3e5,Supply,29
+Kalamata-017d361a10bc,Demand,26
+Kalamata-017d361a10bc,Supply,99
+Kali Limenes-4a137f39ea06,Demand,16
+Kali Limenes-4a137f39ea06,Supply,64
+Kalianget-b25d6300cd99,Supply,21
+Kalundborg-8a215b9131f6,Demand,172
+Kalundborg-8a215b9131f6,Supply,48
+Kanokawa-23e6c8f81685,Demand,93
+Kaohsiung-744e8721bf8f,Demand,533
+Kaohsiung-744e8721bf8f,Supply,43
+Karabane-105ea04156fc,Supply,13
+Karachi-d8f24cbce54f,Demand,583
+Karachi-d8f24cbce54f,Supply,32
+Karimun-129f2fb1bc00,Demand,327
+Karimun-129f2fb1bc00,Supply,309
+Karsto-4ec9bbc93551,Supply,213
+Kashima-8e7e597c2046,Demand,465
+Kashima-8e7e597c2046,Supply,10
+Kawasaki-3c5642389c14,Demand,547
+Kawasaki-3c5642389c14,Supply,32
+Keelung-ebeced683cfa,Demand,22
+Kemaman-89e3dab4fd9b,Demand,39
+Kemaman-89e3dab4fd9b,Supply,20
+Kerteh-f886d5933d0d,Supply,70
+Khalij-e Chabahar-327779f694cd,Demand,13
+Kharg-15622ded90e9,Demand,35
+Kharg-15622ded90e9,Supply,1691
+Khasab-567c7511ef5d,Supply,18
+Khor Fakkan-6317b39e2dcf,Demand,242
+Khor Fakkan-6317b39e2dcf,Supply,610
+Khor al Amaya Oil Terminal-12c9d445a32f,Supply,79
+Khor al Zubair-6ac463d74ecd,Demand,28
+Khor al Zubair-6ac463d74ecd,Supply,282
+Kiire-c1d11e2429fa,Demand,1093
+Kiire-c1d11e2429fa,Supply,1386
+Kijang-07f52d1400df,Supply,11
+Kikuma-8856c476b731,Demand,264
+King Fahd Industrial Port Jubail-c2b2fbc77ff4,Supply,220
+King Fahd Port-34821f7aa799,Demand,342
+King Fahd Port-34821f7aa799,Supply,473
+Kingston-24bf0b1e7a21,Demand,45
+Kingston-24bf0b1e7a21,Supply,15
+Kirkenes-4b38b4662083,Demand,64
+Kirkenes-4b38b4662083,Supply,73
+Kish-e64f0503522c,Demand,10
+Kish-e64f0503522c,Supply,35
+Kithira-44cd4008ceb1,Supply,15
+Kittiwake Terminal-7a36c7a7c2fd,Supply,96
+Klaipeda-0d30f18498ba,Demand,11
+Klaipeda-0d30f18498ba,Supply,208
+Klintholm-5fd12c0b2425,Demand,124
+Klintholm-5fd12c0b2425,Supply,79
+Ko Si Chang Harbor-272da3f36a5a,Demand,98
+Ko Si Chang Harbor-272da3f36a5a,Supply,26
+Kobe-979d4b8273a3,Demand,91
+Kochi-cc7460ea0c71,Demand,504
+Kochi-cc7460ea0c71,Supply,34
+Kota Agung-84a3447ce3f6,Demand,47
+Kota Agung-84a3447ce3f6,Supply,43
+Kotka-1240173c5e40,Supply,88
+Kozmino-62a166ce6f35,Demand,11
+Kozmino-62a166ce6f35,Supply,1510
+Kralendijk-b24e8ab8457c,Demand,86
+Kralendijk-b24e8ab8457c,Supply,30
+Kribi-0d18ef4d8b20,Supply,265
+Kuala Langsa-957e6e4a28ec,Demand,20
+Kuala Langsa-957e6e4a28ec,Supply,10
+Kuala Linggi Intl Port-6425839cf0d6,Demand,588
+Kuala Linggi Intl Port-6425839cf0d6,Supply,741
+Kuala Tanjung-1aa47709b95d,Demand,191
+Kuala Tanjung-1aa47709b95d,Supply,61
+Kuito-2ac15f568c8e,Demand,11
+Kuito-2ac15f568c8e,Supply,986
+Kukup-739aed8dab99,Demand,155
+Kukup-739aed8dab99,Supply,89
+Kulevi-76c1817b32b4,Supply,19
+Kumul-d1c90b85ecf3,Supply,143
+Kurihama-150096464713,Demand,13
+Kwinana-e56ccfd3aeb7,Demand,466
+Kyaukpyu-025759676013,Demand,25
+LOOP-c19184b7b547,Demand,510
+LOOP-c19184b7b547,Supply,139
+La Coruna-0a44300307c1,Demand,362
+La Estacada-30ea10c184a9,Supply,31
+La Paloma-38165a549d3a,Demand,397
+La Paloma-38165a549d3a,Supply,295
+La Pampilla-c82280ceb8a0,Demand,156
+La Pampilla-c82280ceb8a0,Supply,42
+La Place-3db5c3c7bf08,Demand,11
+La Plata-c06d7cba9b45,Demand,13
+La Salina-cac490186639,Supply,32
+La Skhirra-ec363a356152,Supply,50
+Labuan-7c41e61707fc,Demand,24
+Labuan-7c41e61707fc,Supply,230
+Lagos-47014fd09104,Supply,14
+Laizhou-08bba6032811,Demand,503
+Laizhou-08bba6032811,Supply,10
+Lake Charles-8a861dedd10d,Demand,735
+Lanshan-0b14723fa397,Demand,1519
+Lanshan-0b14723fa397,Supply,28
+Larak Is.-56c401139f36,Demand,92
+Larak Is.-56c401139f36,Supply,53
+Las Minas-5762ea6ccd2d,Demand,11
+Las Palmas-5d1a8657373a,Demand,70
+Las Palmas-5d1a8657373a,Supply,142
+Lasawei-611eb914887d,Demand,12
+Laurium-0c1bd8a6c6dd,Demand,11
+Laurium-0c1bd8a6c6dd,Supply,11
+Lavan-192e73959889,Demand,13
+Lavan-192e73959889,Supply,76
+Lazaro Cardenas-43bf0fb63d65,Supply,56
+Le Havre-4c8da7f30f05,Demand,978
+Le Havre-4c8da7f30f05,Supply,17
+Leixoes-3deb77dbc15f,Demand,217
+Lerwick-4daad61c0abb,Supply,125
+Les Escoumins Harbor-3f35dc3969cd,Demand,38
+Les Escoumins Harbor-3f35dc3969cd,Supply,23
+Levis-10811e84a7d1,Demand,256
+Levis-10811e84a7d1,Supply,31
+Limassol-2e76e2e5ad30,Demand,119
+Limassol-2e76e2e5ad30,Supply,194
+Limboh Terminal-69a91073e2a8,Demand,53
+Lirquen-19715cc8d779,Demand,157
+Lirquen-19715cc8d779,Supply,148
+Lisboa-0860dd02e960,Supply,13
+Little Burin Harbor-bff5378de381,Supply,12
+Littlehampton-0ffdc4e1fdd5,Demand,12
+Liuheng-c7395faa59ca,Demand,566
+Liuheng-c7395faa59ca,Supply,178
+Liverpool-74c10d29bf7f,Demand,12
+Livorno-706a305f41ba,Demand,265
+Livorno-706a305f41ba,Supply,19
+Llanddulas-aac8bb8548dc,Supply,26
+Lombo East Terminal-f25cc6a7ab2b,Supply,21
+Lome-ac60ca402042,Demand,239
+Lome-ac60ca402042,Supply,181
+Long Beach-4c3082f54073,Demand,1541
+Long Beach-4c3082f54073,Supply,192
+Long Harbour-f1a2f89d1d91,Demand,57
+Long Harbour-f1a2f89d1d91,Supply,135
+Long Pond-b2e644d428b5,Supply,14
+Longkou-83dd447f48b9,Demand,691
+Longkou-83dd447f48b9,Supply,141
+Los Angeles-b69ef5ad9a4c,Demand,86
+Los Angeles-b69ef5ad9a4c,Supply,11
+Lowestoft-fa26f9b6e8fb,Demand,126
+Lowestoft-fa26f9b6e8fb,Supply,104
+Luanda-ca9aa21f6979,Demand,41
+Luanda-ca9aa21f6979,Supply,47
+Luba-7c3ce5a043e8,Supply,15
+Lucaya-3d36bf68693f,Demand,33
+Lucaya-3d36bf68693f,Supply,24
+Lufeng-c78290742b89,Supply,27
+Luka Umag-0e9383c97640,Demand,14
+Lumut-3dba541680de,Demand,16
+Lushun-b9d1b7664b30,Demand,47
+Lyness-b0a6e09ce2a9,Demand,193
+Lyness-b0a6e09ce2a9,Supply,430
+Macae-04cbbcf288b4,Supply,65
+Macduff-60ed9bc1ed62,Demand,16
+Macduff-60ed9bc1ed62,Supply,67
+Madre De Deus-1d2feb9c4dd5,Demand,735
+Madre De Deus-1d2feb9c4dd5,Supply,117
+Madura Terminal-9e5b960103f1,Supply,14
+Magpetco-c6d4b432d715,Demand,66
+Magpetco-c6d4b432d715,Supply,88
+Mai Liao-4dcea326f7a3,Demand,306
+Mai Liao-4dcea326f7a3,Supply,67
+Makung-dba622fbac1f,Demand,54
+Malabo-31e86d3dcbcb,Supply,50
+Malacca-d424d47f4e04,Demand,210
+Malacca-d424d47f4e04,Supply,281
+Maldonado-1e4b751efa88,Demand,30
+Maldonado-1e4b751efa88,Supply,27
+Malmo-a3bc35ec1802,Supply,12
+Malta Freeport-d3fb8c6279a1,Demand,350
+Malta Freeport-d3fb8c6279a1,Supply,997
+Mamonal-3f9fa4be84a1,Demand,89
+Mamonal-3f9fa4be84a1,Supply,185
+Manzanillo-e3f77d2cc736,Demand,10
+Maoming-3dec36d49de2,Demand,216
+Map Ta Phut-202fdc862c4c,Demand,497
+Map Ta Phut-202fdc862c4c,Supply,230
+Maracaibo-9c00abcf4d8a,Demand,30
+Maracaibo-9c00abcf4d8a,Supply,119
+March Point-2b6c25829a80,Demand,270
+March Point-2b6c25829a80,Supply,81
+Marcus Hook-9826103388b5,Demand,285
+Marcus Hook-9826103388b5,Supply,71
+Marmara Ereglisi-b53ee56ec9d8,Demand,16
+Marrero-5646d4d00bdf,Supply,20
+Marsa Al Hariga-915f1727d69b,Supply,198
+Marsa-el-Brega-47896c91db43,Supply,80
+Marsden Point-fcb0af7daf9a,Demand,302
+Martinez-3b2eed3fba73,Demand,313
+Martinez-3b2eed3fba73,Supply,17
+Massawa-7c22a25024d3,Demand,10
+Massawa-7c22a25024d3,Supply,25
+Matanzas-0c7cf8ac0c2c,Demand,72
+Meizhou-c47a793b6d55,Demand,18
+Melbourne-b02fe931e82d,Demand,213
+Melbourne-b02fe931e82d,Supply,13
+Mellitah-f0d1246755ae,Supply,108
+Mersin-96488f75954b,Demand,139
+Mersin-96488f75954b,Supply,155
+Mesaieed-a9436ca46624,Supply,120
+Methil-e66612f17632,Demand,13
+Methil-e66612f17632,Supply,77
+Midia-3dfd7036f3cc,Demand,265
+Miike-Miyake-ef6584fefcde,Demand,14
+Milazzo-fab25159eebe,Demand,599
+Milazzo-fab25159eebe,Supply,17
+Milford Haven-c669fc0bc437,Demand,94
+Milford Haven-c669fc0bc437,Supply,60
+Mina Abd Allah-32fa51f996b2,Supply,61
+Mina Al Ahmadi Sea Island-98bd957bb207,Demand,13
+Mina Al Ahmadi Sea Island-98bd957bb207,Supply,2777
+Mina Al Ahmadi-2d893ce729f6,Demand,34
+Mina Al Ahmadi-2d893ce729f6,Supply,430
+Mina Al Fahl-2478ba60dc4c,Demand,37
+Mina Al Fahl-2478ba60dc4c,Supply,1078
+Mina Saqr-91789deda526,Demand,14
+Mina Saqr-91789deda526,Supply,48
+Mina Saud-512fccf68466,Supply,159
+Mindelo-0db13e7faaf3,Supply,10
+Miri-1bb8c2143a5b,Supply,189
+Mizushima-972596797070,Demand,597
+Mobile-17568e28e776,Demand,296
+Mohammedia-9d281db1f7e0,Demand,64
+Mongstad-8338fd2d4afb,Demand,235
+Mongstad-8338fd2d4afb,Supply,728
+Montevideo-e1e5b78ae3af,Demand,23
+Mostaganem-442f884f1f1d,Supply,58
+Mostyn-bac51b8666bf,Demand,33
+Moudi-a9543110b4e5,Supply,189
+Muara Port-d2c7fb7122af,Demand,70
+Mubarraz Oil Terminal-440295344cd7,Supply,37
+Mumbai-2401570c9a9e,Demand,926
+Mumbai-2401570c9a9e,Supply,104
+Mundra-77b0b5c9bfc5,Demand,585
+Mundra-77b0b5c9bfc5,Supply,38
+Murmansk-9908e9ea9558,Demand,86
+Murmansk-9908e9ea9558,Supply,452
+Muuga-98111e964fdd,Demand,21
+Muuga-98111e964fdd,Supply,260
+Nagasaki-7e87edcef775,Demand,63
+Nagasaki-7e87edcef775,Supply,38
+Nagoya-0273cf38f24f,Demand,171
+Nakhodka-eaf8326ce14b,Demand,50
+Nakhodka-eaf8326ce14b,Supply,285
+Namikata-47315960812a,Demand,10
+Nansha-30b0e011c238,Demand,108
+Nansha-30b0e011c238,Supply,143
+Neapolis-e3a053861e52,Demand,10
+Neapolis-e3a053861e52,Supply,11
+Nederland Terminal-aba03a4a335d,Demand,451
+Nederland Terminal-aba03a4a335d,Supply,509
+Nemrut Bay-e89f801cf7ac,Demand,160
+Nessebar-a47f3d0c08c1,Demand,28
+Neves-981d0a428655,Supply,22
+New Amsterdam-bc809b3811e1,Supply,41
+New Mangalore-db679cd54805,Demand,412
+New Mangalore-db679cd54805,Supply,26
+New York/New Jersey-8cd5e206ca6b,Demand,518
+New York/New Jersey-8cd5e206ca6b,Supply,24
+Newhaven-1163ef20f7e0,Demand,67
+Newport Beach-a7f62131303e,Demand,17
+Newport Beach-a7f62131303e,Supply,18
+Nghi Son-ee0978a45495,Demand,25
+Ngqura-56172ec93945,Demand,22
+Nicaro-631a50aefa47,Demand,17
+Nieuwpoort-43a962e9aa39,Demand,54
+Nieuwpoort-43a962e9aa39,Supply,30
+Nigg-d550ac3d0b8f,Demand,12
+Nigg-d550ac3d0b8f,Supply,23
+Nikiski-9d186f9b4554,Supply,22
+Nipah-d6661f39660d,Demand,22
+Nishihara-c446948844e2,Demand,15
+Niteroi-4f72e75cb748,Demand,24
+Niteroi-4f72e75cb748,Supply,63
+No 1-a3f3dce2871b,Demand,31
+Norco-37e4851cb966,Demand,12
+Norte Capixaba-63d8032fd2be,Supply,18
+Northville-2e33ffbc97a8,Demand,17
+Nouadhibou-47c16e5fd8bb,Supply,16
+Noumea-06b91e621e7c,Demand,30
+Novorossiysk CPC-3b26a9570fd1,Supply,2751
+Novorossiysk-45a5021eee47,Demand,35
+Novorossiysk-45a5021eee47,Supply,2248
+Nyanga-12d8f6a196a1,Supply,67
+Nynashamn-cb97573cc92f,Demand,83
+Odden-b7d736f50f00,Demand,39
+Odden-b7d736f50f00,Supply,22
+Odessa-0ecbd229fca4,Demand,49
+Odessa-0ecbd229fca4,Supply,26
+Odudu-b8f65d99c416,Supply,347
+Oita-d53c3f263e6d,Demand,350
+Okata-b23de0969a82,Demand,20
+Okha-bbd56498dcb1,Demand,703
+Okha-bbd56498dcb1,Supply,14
+Okinawa-49d614b5d6e9,Demand,23
+Okinawa-49d614b5d6e9,Supply,29
+Omisalj-89ece074914b,Demand,415
+Omisalj-89ece074914b,Supply,13
+Omo-6d353f446c37,Demand,10
+Onagawa-0d3e08088a7a,Demand,11
+Onahama Ko-7a3fed174612,Demand,27
+Onsan-a7dc5f7a135b,Demand,1929
+Onsan-a7dc5f7a135b,Supply,73
+Oostende-48dec42d65d0,Demand,57
+Oran-6cbf14d6ae9b,Supply,12
+Oranjestad-5fc0525971c3,Demand,161
+Oranjestad-5fc0525971c3,Supply,168
+Pachi Oil Terminal-a5df6199c9be,Demand,495
+Palanca-bfff6a80e78a,Supply,213
+Palembang-dd3c7a4a3537,Demand,39
+Palembang-dd3c7a4a3537,Supply,45
+Palenque Terminal-654496174969,Demand,67
+Panama City-6a366b46b9bd,Demand,69
+Panama City-6a366b46b9bd,Supply,54
+Panjang-6ec3de3c55d8,Demand,12
+Paradip-bbfab942f25c,Demand,644
+Pascagoula-7c3cc504a701,Demand,476
+Pascagoula-7c3cc504a701,Supply,72
+Pasir Gudang-afa2862ca9bc,Demand,56
+Pasir Gudang-afa2862ca9bc,Supply,56
+Paulina-65688ac9480b,Supply,16
+Paulsboro-b860100abb51,Demand,556
+Pecem-19e976efca40,Supply,16
+Pelintung-a3284c716c14,Supply,23
+Pembroke-c44d85ab621f,Demand,498
+Pembroke-c44d85ab621f,Supply,15
+Penara Terminal-d7cc9807a741,Supply,33
+Penco-7e69146a18ac,Demand,13
+Penco-7e69146a18ac,Supply,15
+Pengerang-1ae97f4f549d,Demand,279
+Pengerang-1ae97f4f549d,Supply,389
+Penglai-67e1910b3b9d,Demand,19
+Pennington-9b814f3f0f8d,Supply,388
+Peterhead-1d608731f5b3,Supply,39
+Petrochina Marine Terminal-197859dadbe0,Supply,12
+Philadelphia-51672418fa6a,Demand,779
+Philadelphia-51672418fa6a,Supply,77
+Piraeus-c16ef333d5f0,Supply,13
+Pivdennyi-2a9246bd7341,Demand,12
+Point Richmond-0ffdde27d38d,Demand,880
+Point Richmond-0ffdde27d38d,Supply,80
+Point Tupper-f3e3e61dc2f7,Demand,152
+Point Tupper-f3e3e61dc2f7,Supply,103
+Pointe A Pierre-c31df0e03203,Demand,126
+Pointe A Pierre-c31df0e03203,Supply,97
+Pointe Noire-6d641be85e76,Supply,135
+Pointe aux Trembles-e95b1231c0a4,Demand,29
+Ponta Do Ubu-582fde5e4522,Demand,12
+Ponta Do Ubu-582fde5e4522,Supply,853
+Porbandar-380a662573a7,Demand,12
+Porbandar-380a662573a7,Supply,65
+Port Angeles-084976ad6a70,Demand,35
+Port Angeles-084976ad6a70,Supply,223
+Port Aransas-29a8105fada5,Demand,562
+Port Aransas-29a8105fada5,Supply,498
+Port Arthur-26aba1bc33e8,Demand,981
+Port Arthur-26aba1bc33e8,Supply,716
+Port Bonython-f61309eaca5a,Supply,100
+Port Canaveral-42636cb5a3b7,Demand,10
+Port De Salvador-f8855b05ba0e,Demand,157
+Port De Salvador-f8855b05ba0e,Supply,168
+Port Dickson-47b3d9faec98,Demand,720
+Port Dickson-47b3d9faec98,Supply,141
+Port Elizabeth-2813f670d2cf,Supply,13
+Port Everglades-1f1d93739176,Demand,15
+Port Fourchon-39947b92ce27,Demand,397
+Port Fourchon-39947b92ce27,Supply,349
+Port Hueneme-540f60da7884,Demand,11
+Port Hueneme-540f60da7884,Supply,13
+Port Ingleside-768a671ec8e5,Demand,61
+Port Ingleside-768a671ec8e5,Supply,848
+Port Isabel-69b426430620,Demand,23
+Port Isabel-69b426430620,Supply,15
+Port Klang-083f09688b4c,Demand,2162
+Port Klang-083f09688b4c,Supply,685
+Port Louis-086c06178a7f,Supply,11
+Port Moresby-e02b8ef56428,Demand,64
+Port Neches-b1543f00d56b,Demand,830
+Port Neches-b1543f00d56b,Supply,23
+Port O'connor-8bbd6bb0380c,Demand,82
+Port O'connor-8bbd6bb0380c,Supply,78
+Port Said-73e707725c62,Demand,220
+Port Said-73e707725c62,Supply,401
+Port Sudan-6d04a46dcc42,Supply,47
+Port Sulphur-2fc90e4a048b,Demand,36
+Port Sulphur-2fc90e4a048b,Supply,10
+Port of Annobon-04ef05407850,Supply,52
+Portland Maine-bb32d49f9edf,Demand,71
+Porto Acu-db9c1341eaaa,Demand,285
+Porto Acu-db9c1341eaaa,Supply,2579
+Portocel-dd1fa02e9dc2,Supply,88
+Portsmouth-5fe042cf526d,Demand,30
+Prigorodnoye-556300b689ad,Supply,111
+Primorsk-1745900bf09d,Supply,2097
+Progreso-c07ce3a81043,Supply,13
+Puerto Armuelles-b7cc9a85245c,Demand,34
+Puerto Armuelles-b7cc9a85245c,Supply,193
+Puerto Banus-12e857644c1c,Supply,15
+Puerto Carenero-275e38f214d3,Supply,11
+Puerto Cortes-190c625f6973,Demand,29
+Puerto Jose-bd9e62d67225,Demand,150
+Puerto Jose-bd9e62d67225,Supply,2510
+Puerto La Cruz-04e122120f88,Demand,30
+Puerto La Cruz-04e122120f88,Supply,494
+Puerto Manzanillo-31047163653d,Demand,21
+Puerto Miranda-dfaaa9f47168,Demand,40
+Puerto Miranda-dfaaa9f47168,Supply,221
+Puerto Pedernales-89d8e8549b46,Supply,16
+Puerto Rosales-945fc5e1ffa4,Demand,1031
+Puerto Rosales-945fc5e1ffa4,Supply,14
+Puerto Sandino-875494a578f2,Demand,30
+Puerto Ventanas-cac3a8f8b448,Demand,40
+Punta Cardon-a3b8a4418174,Demand,88
+Punta Cardon-a3b8a4418174,Supply,144
+Punta Loyola-a4806fa850c7,Supply,16
+Punta Piedras-e061feee7553,Supply,33
+Punte Del Este-c2678f3bb8e5,Demand,10
+Puttgarden-cfa37499f821,Demand,11
+Pyeongtaek-0e39670a71f6,Demand,26
+Qalhat-6ddf9bae4f6c,Supply,10
+Qingdao-910e8b237492,Demand,2023
+Qingdao-910e8b237492,Supply,90
+Qinglan-dc7e9ab52c44,Supply,12
+Qinhuangdao-09efc9c7c0d1,Supply,121
+Qinzhou-55f3f1f842bb,Demand,374
+Qinzhou-55f3f1f842bb,Supply,24
+Qua Iboe-cd7ce6d027dd,Supply,565
+Quanzhou-69958f2a6f4b,Demand,425
+Quinfuquena-1cdfa3923a92,Supply,14
+Quintero-4b0992806f09,Demand,357
+Quintero-4b0992806f09,Supply,52
+Rabigh-4c7cf4448302,Demand,352
+Rabigh-4c7cf4448302,Supply,134
+Ramsgate-6d72c4317595,Supply,11
+Ras Gharib-305f907eb640,Demand,17
+Ras Gharib-305f907eb640,Supply,124
+Ras Laffan-cb891923a010,Supply,526
+Ras Lanuf-d961b870ccc1,Supply,70
+Ras Shukheir-8cbc214c7efa,Demand,19
+Ras Tanura-601e8fb13c3c,Demand,24
+Ras Tanura-601e8fb13c3c,Supply,9536
+Rayong-3ff1a19509c1,Demand,247
+Rayong-3ff1a19509c1,Supply,29
+Rijeka-c859ae2c1617,Demand,18
+Rio De Janeiro-ef2da6007e09,Demand,580
+Rio De Janeiro-ef2da6007e09,Supply,2398
+Rio Grande-acd35aa33e60,Demand,42
+Risavika-704d5c9901be,Supply,49
+Rizhao-ebeadf61186b,Demand,22
+Rodeo-8e7a19dc6520,Demand,84
+Rosarito-06bc5c8b3eec,Demand,40
+Rosarito-06bc5c8b3eec,Supply,24
+Rostock-3757c4df2366,Demand,33
+Rostock-3757c4df2366,Supply,16
+Rotterdam-92c070ce8e92,Demand,5485
+Rotterdam-92c070ce8e92,Supply,539
+Rovigo LNG Terminal-4c3e484e457d,Demand,16
+Rovigo LNG Terminal-4c3e484e457d,Supply,33
+Rozi Island-2d31e93a80af,Demand,93
+Rozi Island-2d31e93a80af,Supply,49
+Ruwais-1ef3a6e42f3e,Demand,43
+Ruwais-1ef3a6e42f3e,Supply,216
+Ryde-55baeddac00e,Demand,108
+Ryde-55baeddac00e,Supply,63
+Rye Harbour-7fdaa1afd4e3,Demand,37
+Sabah Terminal-f96b052e46b2,Supply,334
+Sabang-5d21d8589893,Demand,29
+Sacomar Port-a4cafbecbd97,Supply,15
+Sadat-9e690dd0eaf0,Demand,65
+Sadat-9e690dd0eaf0,Supply,12
+Saiki-e99fcec97afa,Demand,18
+Saint John-99b5182a722a,Demand,612
+Sakai-Semboku-c9b22e968c26,Demand,713
+Saladin Marine Terminal-347c4826eab4,Supply,29
+Salamis-db1e608fdaf0,Demand,13
+Salaya-f0cd43ecdfdb,Demand,22
+Salcombe Harbor-3e15227ecf9a,Supply,29
+Saldanha Bay-74e231f7029a,Demand,181
+Saldanha Bay-74e231f7029a,Supply,49
+Salina Cruz-bef5961095f2,Supply,200
+Salman-99b0595bd4d6,Supply,91
+San Diego-3ec4fffd4225,Demand,45
+San Diego-3ec4fffd4225,Supply,56
+San Francisco-4df83263d680,Demand,14
+San Francisco-4df83263d680,Supply,116
+San Francisco-5cbd79283bad,Demand,192
+San Francisco-5cbd79283bad,Supply,144
+San Lorenzo-42507b58e7bf,Demand,14
+San Nicolas-ff36bc1d90be,Demand,111
+San Nicolas-ff36bc1d90be,Supply,178
+San Pedro-0f135772b35e,Supply,11
+San Sebastian Bay-61ff4b7d4540,Supply,21
+San Vicente-37d45c87e8d9,Demand,325
+San Vicente-37d45c87e8d9,Supply,61
+Sanghi-05520d2f3b3f,Demand,42
+Sanghi-05520d2f3b3f,Supply,11
+Santa Cruz De Tenerife-e085fe41fd98,Demand,20
+Santa Cruz De Tenerife-e085fe41fd98,Supply,36
+Santa Panagia-efd40d901d95,Demand,352
+Santa Panagia-efd40d901d95,Supply,46
+Santan Terminal-9556d7983b63,Supply,51
+Santo Antonio-cb00400ad4d6,Supply,31
+Santo Tomas De Castilla-36a6bca53908,Supply,23
+Santos-78f08d89b90b,Demand,233
+Santos-78f08d89b90b,Supply,999
+Sao Francisco-a1636f5a0ca0,Demand,526
+Sao Francisco-a1636f5a0ca0,Supply,21
+Sao Sebastiao-0bca302110e4,Demand,2329
+Sao Sebastiao-0bca302110e4,Supply,193
+Sao Tome-d8d7b9acbc72,Supply,27
+Sarooj-d08b728964a0,Supply,51
+Sarroch-5e39efaa7d08,Demand,763
+Sarroch-5e39efaa7d08,Supply,27
+Sattahip-70f1ba9bab58,Demand,51
+Sattahip-70f1ba9bab58,Supply,15
+Savona-db69bf4d9293,Demand,44
+Savona-db69bf4d9293,Supply,35
+Scheveningen-390407975ccc,Demand,19
+Scheveningen-390407975ccc,Supply,69
+Seattle-0e8e26b0e307,Supply,14
+Sendai-d38eada9633b,Demand,238
+Senipah-46d51be78b14,Demand,13
+Senipah-46d51be78b14,Supply,55
+Seogwipo-e71a59ee24b6,Demand,14
+Seria-f656b1790602,Demand,11
+Seria-f656b1790602,Supply,333
+Severomorsk-d6ae36680926,Demand,114
+Severomorsk-d6ae36680926,Supply,99
+Sha Lung Terminal-0d1fe7cd72a2,Demand,297
+Shanghai-0939779c35c2,Demand,223
+Shanghai-0939779c35c2,Supply,27
+Shantou-c41625a6f27d,Supply,67
+Shanwei-6e2c129929a4,Supply,26
+Sharm ash Shaykh-16045f0f6570,Demand,26
+Shek Wu-66cd7894b8bd,Demand,130
+Shenao-048edcc3200c,Demand,26
+Shenzhen-efd846b87115,Demand,23
+Shibushi Wan-9ff6fc1396fd,Demand,23
+Shibushi Wan-9ff6fc1396fd,Supply,10
+Shidao-f39f4c14e009,Demand,13
+Shidao-f39f4c14e009,Supply,12
+Shih Pu-9432ef173b5c,Demand,17
+Shimotsu-3d4c4b2e6f91,Demand,262
+Shimotsu-3d4c4b2e6f91,Supply,25
+Shisuo-f2a9d7b07860,Demand,46
+Shoaiba-b2f055a8ad2c,Demand,419
+Shoaiba-b2f055a8ad2c,Supply,33
+Shoreham By-sea-539979e1dc61,Demand,12
+Shuaiba-f453b0bc3593,Supply,60
+Shuidong-023438863782,Demand,161
+Shuqaiq-b93cf1301611,Demand,123
+Shuqaiq-b93cf1301611,Supply,15
+Sidi Kerir-552c943d8b08,Demand,58
+Sidi Kerir-552c943d8b08,Supply,1630
+Sikka-2412f3454235,Demand,1405
+Sikka-2412f3454235,Supply,146
+Sillamae-907fb7299dee,Supply,177
+Sines-ab49749a9544,Demand,485
+Sines-ab49749a9544,Supply,31
+Singapore-bfe15a9e31a0,Demand,4977
+Singapore-bfe15a9e31a0,Supply,2458
+Siri Terminal-49364b130a93,Supply,25
+Sitra-64d805f973cc,Supply,105
+Skagen Havn-db9fa00eadc5,Demand,126
+Skagen Havn-db9fa00eadc5,Supply,185
+Skikda-d728e6dfae5d,Supply,105
+Skoldvik-9ac362d9504c,Demand,542
+Skua Venture Terminal-f21130fd8ee9,Supply,72
+Slagen-7e8c12fa544b,Demand,280
+Slagen-7e8c12fa544b,Supply,48
+Smiths Bluff-8218c47cd56c,Demand,12
+Smiths Bluff-8218c47cd56c,Supply,282
+Smogen-6c00d509baec,Demand,25
+Smogen-6c00d509baec,Supply,11
+Sohar-96f03dd66949,Demand,35
+Sohar-96f03dd66949,Supply,74
+South Riding Point-3209f163c450,Demand,24
+South Riding Point-3209f163c450,Supply,20
+Southwest Pass-bcf54ac59c4c,Demand,164
+Southwest Pass-bcf54ac59c4c,Supply,106
+Soyo-Quinfuquena Terminal-5d7f58ba717c,Supply,49
+Sriracha-6848d1a49775,Demand,660
+Sriracha-6848d1a49775,Supply,106
+St Croix-746521cb3acc,Demand,98
+St Croix-746521cb3acc,Supply,50
+St Eustatius-6d04d0582e89,Demand,315
+St Eustatius-6d04d0582e89,Supply,208
+St Petersburg-ee5cca05838e,Supply,215
+St Rose-8366881db461,Demand,122
+St Rose-8366881db461,Supply,63
+St. James-f7d07a0501fa,Demand,73
+St. James-f7d07a0501fa,Supply,83
+St. John's-167371d92a27,Supply,234
+St. Paul's Bay-173c82902bec,Demand,11
+St. Paul's Bay-173c82902bec,Supply,53
+Statfjord Terminal-4deb8eea9fde,Supply,179
+Stigsnaesvaerkets Havn-121bc17e59e9,Demand,35
+Stigsnaesvaerkets Havn-121bc17e59e9,Supply,69
+Stromness-8f0bc183e5a9,Supply,303
+Sture-306d65b12c37,Supply,1000
+Su-ao-5f52a1dad8f2,Demand,11
+Suakin-b28c090bf93b,Supply,12
+Suape-b993f91ea377,Demand,313
+Suape-b993f91ea377,Supply,110
+Suez-4ad378ddd198,Demand,392
+Suez-4ad378ddd198,Supply,270
+Sugozu-bb976476029b,Supply,17
+Sullom Voe-ed67292751d4,Supply,217
+Sungai Udang-fdc7302ba47a,Demand,525
+Sungai Udang-fdc7302ba47a,Supply,41
+Sungaipakning-1ef0d5d41b98,Demand,10
+Sunshine-c11110d611dc,Demand,11
+Supsa-4307a17898f5,Supply,262
+Suralaya-5cca1a6fc7fd,Demand,13
+Tabangao-9a48d0aac0d7,Demand,107
+Tachibana-6f7f6a7dfe03,Demand,25
+Taean-f841f4ef5a9f,Demand,52
+Taft-04f575e5d893,Demand,22
+Taft-04f575e5d893,Supply,13
+Taichung-7354b6d28ef6,Demand,18
+Taipei-5a4e0dfabd8a,Demand,14
+Taizhou-12321b93d725,Demand,76
+Takoradi-d0135296250c,Demand,18
+Takoradi-d0135296250c,Supply,199
+Talara-9c8afdbf5bad,Demand,33
+Talara-9c8afdbf5bad,Supply,39
+Talcahuano-f218806b0ec7,Demand,144
+Talcahuano-f218806b0ec7,Supply,132
+Tallinn-55e0541e5b2a,Demand,11
+Tallinn-55e0541e5b2a,Supply,11
+Taman-9f1125c5b4b6,Demand,22
+Taman-9f1125c5b4b6,Supply,568
+Tampico-d7f4205ad8ae,Demand,12
+Tampico-d7f4205ad8ae,Supply,18
+Tanabe Ko-e8301a091f19,Demand,14
+Tangier-Mediterranee-20d2f2d15e0b,Demand,58
+Tanjung Intan-dcdffcad4714,Demand,462
+Tanjung Intan-dcdffcad4714,Supply,37
+Tanjung Langsat-306a4b339ba9,Demand,33
+Tanjung Langsat-306a4b339ba9,Supply,38
+Tanjung Pakis-8e20d1ad4e27,Supply,13
+Tanjung Pandan-fd7fe3aef696,Demand,10
+Tanjung Pelepas-71ae886ba35d,Demand,1401
+Tanjung Pelepas-71ae886ba35d,Supply,1300
+Taranto-ede861548441,Demand,79
+Tarragona-75e622055165,Demand,520
+Tarragona-75e622055165,Supply,15
+Tartan Terminal-268340876e53,Supply,49
+Tateyama Ko-41c66a8c4ac8,Demand,52
+Taura-2b5bd2d8ee2a,Demand,16
+Tchatamba Marine Terminal-d624a7d093e5,Supply,21
+Tecarmo Aracaju-a186b113ec8b,Supply,37
+Teesport-736acdd7afa2,Supply,876
+Teluk Rubiah-e4929c3bd877,Demand,11
+Tema-ad7af47553e0,Demand,35
+Tema-ad7af47553e0,Supply,33
+Tenes-bcf7a64fa258,Demand,11
+Tenes-bcf7a64fa258,Supply,33
+Tepre Terminal-1ae568886737,Supply,29
+Texas City-28cb23375401,Demand,532
+Texas City-28cb23375401,Supply,118
+Thessaloniki-66e8437b5188,Demand,181
+Tianjin-6fb346c7ceca,Demand,810
+Tianjin-6fb346c7ceca,Supply,18
+Toba-08f56e4aaa4e,Demand,68
+Tomakomai-c94f864ced4a,Demand,191
+Tomakomai-c94f864ced4a,Supply,13
+Tosa-shimizu-e76ed49f73db,Demand,22
+Tracy-69d17ddc9131,Supply,23
+Tramandai-9708170895cc,Demand,428
+Tramandai-9708170895cc,Supply,20
+Tranmere-7a5883e42177,Demand,541
+Trieste-2aed856f346e,Demand,2592
+Trieste-2aed856f346e,Supply,20
+Trincomalee Harbor-9de2fbedb23d,Demand,26
+Trincomalee Harbor-9de2fbedb23d,Supply,12
+Troon-38d199a7c2e1,Demand,24
+Tuapse-49cfa42e4026,Supply,107
+Tuban Marine Terminal-23b7587789dc,Supply,161
+Tuban-a24ac0e38ee9,Demand,57
+Tuban-a24ac0e38ee9,Supply,103
+Tubarao-4848d977be95,Demand,14
+Tubarao-4848d977be95,Supply,145
+Tumaco-1fcbbc4d05f2,Supply,31
+Tutunciftlik-193af158122c,Demand,552
+Tuxpan-d3f9c4372fe0,Demand,53
+Ube-c273f1ec2e46,Demand,185
+Ulsan-b3b140b8d0ea,Demand,309
+Ulsan-b3b140b8d0ea,Supply,88
+Umm Qasr-cf5700891386,Supply,94
+Ushant-9da0b2371bfa,Supply,17
+Ust-Luga-e9ea2bf59471,Demand,28
+Ust-Luga-e9ea2bf59471,Supply,2858
+Vadinar-95b0ec8946e3,Demand,1153
+Vadinar-95b0ec8946e3,Supply,66
+Vado Ligure-c87d27fa8b7b,Demand,357
+Valdez-2044032df24e,Supply,617
+Valletta Harbors-9964ebed3065,Demand,23
+Valletta Harbors-9964ebed3065,Supply,51
+Vancouver-3e2e2c90248e,Supply,104
+Varandey-d4bcafba1db4,Supply,167
+Varanus-ce766ecf7dc3,Supply,37
+Vatika Bay-443d87c3c171,Supply,14
+Ventspils-4c7c50361179,Supply,98
+Violet-2381807cf9a0,Demand,11
+Visakhapatnam-73ed77525071,Demand,381
+Vlissingen-71c1b08d6d65,Supply,32
+Vostochny-a1059c7eeec6,Supply,39
+Vung Tau-fd30e1b2fc95,Supply,54
+Vysotsk-473b36081811,Supply,284
+Wadi Feiran-f112385ebe45,Demand,14
+Wadi Feiran-f112385ebe45,Supply,42
+Walvis Bay-369248f61f6f,Supply,12
+Weizhou Island-c73b468c4fba,Supply,74
+Western Yantai-95889f42a047,Demand,436
+Whakaaropai Terminal-8a42c792d8d6,Supply,27
+Whiffen Head-9d95e17d2034,Demand,347
+Whiffen Head-9d95e17d2034,Supply,536
+Whitegate-af96b36e8476,Demand,215
+Whitegate-af96b36e8476,Supply,11
+Whyalla-d339d497833b,Supply,22
+Widuri Marine Terminal-4917077fd7e9,Supply,15
+Wilhelmshaven-34a71cee910d,Demand,1070
+Wilhelmshaven-34a71cee910d,Supply,40
+Willemstad-9cf9d3381517,Demand,165
+Willemstad-9cf9d3381517,Supply,107
+Xijiang Terminal-f6552acab4d7,Demand,22
+Xijiang Terminal-f6552acab4d7,Supply,56
+Yabucoa-01be197794dc,Demand,23
+Yanbu-28f231cac387,Demand,31
+Yanbu-28f231cac387,Supply,73
+Yangpu-da9d66d9e3a9,Demand,293
+Yangpu-da9d66d9e3a9,Supply,55
+Yangshan-6984eab6a8fc,Demand,63
+Yantian-856379709c13,Demand,24
+Yantian-856379709c13,Supply,22
+Yeosu-e9b7bd6fcddb,Demand,566
+Yeosu-e9b7bd6fcddb,Supply,303
+Yingkou-54cfde7f5e3d,Demand,264
+Yithion-2326abdb26a1,Supply,23
+Yizheng-dff2e2344dd3,Demand,23
+Yokkaichi-4e5f3a884727,Demand,544
+Yokohama-aa8f1ab13ec7,Demand,651
+Yokohama-aa8f1ab13ec7,Supply,23
+Yumurtalik-4545edd2bd41,Supply,11
+Yura-7aaaa98a7398,Demand,10
+Zaafarana Terminal-c89ca7e88418,Demand,10
+Zafiro-78c50cfb00e2,Supply,160
+Zeebrugge-6352196beb0e,Demand,35
+Zeit Bay Terminal-743e257bfe00,Demand,19
+Zeit Bay Terminal-743e257bfe00,Supply,15
+Zhanjiang-71e260383bb7,Demand,766
+Zhanjiang-71e260383bb7,Supply,64
+Zhoushan-611472facb34,Demand,1607
+Zhoushan-611472facb34,Supply,364
+Zhuhai-937947ea68bb,Demand,57
+Zhuhai-937947ea68bb,Supply,10
+Zirku Island-a43755386268,Supply,1567
