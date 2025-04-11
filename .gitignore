@@ -25,3 +25,5 @@ venv/
 *.tmp
 
 .DS_Store
+
+*.json
