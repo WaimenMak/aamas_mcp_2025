@@ -173,28 +173,24 @@ class Solver:
 
                     idle_time = model.NewIntVar(0, max_time, f"idle_{t1}_{t2}_v{v}")
                     ballast_time = model.NewIntVar(0, max_time, f"ballast_{t1}_{t2}_v{v}")
+                    model.Add(idle_time == 0).OnlyEnforceIf(both_assigned.Not())
+                    model.Add(idle_time == 0).OnlyEnforceIf(t2_after_t1.Not())
+                    model.Add(idle_time == 0).OnlyEnforceIf(gap_ok.Not())
 
-                    model.Add(idle_time == gap_time - min_gap_required).OnlyEnforceIf([
-                        both_assigned, t2_after_t1, gap_ok
-                    ])
-                    model.Add(idle_time == 0).OnlyEnforceIf([
-                        both_assigned.Not()
-                    ]).OnlyEnforceIf([
-                        t2_after_t1.Not()
-                    ]).OnlyEnforceIf([
-                        gap_ok.Not()
-                    ])
                     # idle_consumption_expr.append(vessel.get_idle_consumption(idle_time))
                     idle_consumption_rate = ceil(vessel._propelling_engine._idle_consumption)
                     idle_consumption_expr.append(idle_time * idle_consumption_rate) # linear approximation
-                    model.Add(ballast_time == travel_time).OnlyEnforceIf([
-                        both_assigned, t2_after_t1, gap_ok
-                    ])
+                    # model.Add(ballast_time == travel_time).OnlyEnforceIf([
+                    #     both_assigned, t2_after_t1, gap_ok
+                    # ])
                     # ballast_consumption_expr.append(vessel.get_ballast_consumption(ballast_time, vessel.speed))
-                    base = ceil(vessel.Data.ballast_consumption_rate.base)
-                    factor = ceil(vessel.Data.ballast_consumption_rate.factor)
-                    pow_speed = ceil(pow(vessel.speed, vessel.Data.ballast_consumption_rate.speed_factor))
-                    ballast_consumption_expr.append(base * pow_speed * ballast_time * factor) # linear approximation
+                    # Get the ballast consumption rate parameters
+                    ballast_rate = vessel._propelling_engine._ballast_consumption_rate
+                    base = ballast_rate.base
+                    factor = ballast_rate.factor
+                    speed_power = ballast_rate.speed_power
+                    # ballast_consumption_expr.append(calculate_ballast_consumption(vessel.speed, travel_time)) # original
+                    # ballast_consumption_expr.append(ballast_time * ceil(base * pow(vessel.speed, speed_power) * factor)) # linear approximation
 
         # max_travel_distance = max(trades_with_id[t].travel_distance for t in range(len(trades)))
         # min_fleet_speed = min(vessel.speed for vessel in fleets)
@@ -229,9 +225,9 @@ class Solver:
 
         # idle cost
         total_idle_cost = sum(idle_consumption_expr)
-        total_ballast_cost = sum(ballast_consumption_expr)
+        # total_ballast_cost = sum(ballast_consumption_expr)
         # model.Minimize(sum(fuel_expr) + total_idle_cost + total_ballast_cost + sum(penalty_expr))
-        model.Minimize(sum(fuel_expr) + sum(penalty_expr) + total_ballast_cost + total_idle_cost)
+        model.Minimize(sum(fuel_expr) + sum(penalty_expr) + total_idle_cost)
         # solve the problem
         solver = cp_model.CpSolver()
         status = solver.Solve(model)
