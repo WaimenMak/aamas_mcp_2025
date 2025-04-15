@@ -63,7 +63,6 @@ class Solver:
             model.Add(sum(assign[t, v] for v in range(len(fleets))) <= 1)
 
         # Constraint: Ensure first pickup time allows for travel from depot
-                # Constraint: Ensure first pickup time allows for travel from depot
         for v, vessel in enumerate(fleets):
             vessel_location = vessel.location  # Get the vessel's starting location
 
@@ -344,133 +343,122 @@ class Solver:
         idle_consumption_expr = []
         ballast_consumption_expr = []
         
-        # Add calculations for the initial positioning of each vessel
+        # --- Initial Positioning and Idle/Ballast Consumption ---
+        current_time = 0 # Assuming planning starts at time 0. Adjust if needed.
+        SCALE_FACTOR = 10 # Assuming you use 10 based on the previous code for ballast
+
         for v, vessel in enumerate(fleets):
-            vessel_location = vessel.location  # Current location of the vessel
-            # For each potential first trade for this vessel
+            vessel_location = vessel.location  # Get the vessel's starting location
+            is_first_trade_list_for_v = [] # For the AddAtMostOne constraint
+
             for t in range(len(trades)):
-                # Create a variable that indicates if trade t is the first for vessel v
-                is_first_trade = model.NewBoolVar(f"first_trade_{t}_v{v}")
-                # This is the first trade for vessel v if:
-                # 1. It's assigned to vessel v
-                # 2. No other trade with an earlier pickup time is assigned to vessel v
-                model.Add(is_first_trade <= assign[t, v])  # Can only be first if assigned
-                # Check if this is the earliest assigned trade
-                for other_t in range(len(trades)):
-                    if other_t == t:
-                        continue
-                    # If other_t has earlier pickup time and is assigned to v, then t is not first
-                    earlier_pickup = model.NewBoolVar(f"earlier_pickup_{other_t}_than_{t}_v{v}")
-                    model.Add(pickup_time[other_t] < pickup_time[t]).OnlyEnforceIf(earlier_pickup)
-                    model.Add(pickup_time[other_t] >= pickup_time[t]).OnlyEnforceIf(earlier_pickup.Not())
-                    # If other_t is earlier and assigned, t is not first
-                    not_first_due_to_other = model.NewBoolVar(f"not_first_due_to_{other_t}_{t}_v{v}")
-                    model.AddBoolAnd([earlier_pickup, assign[other_t, v]]).OnlyEnforceIf(not_first_due_to_other)
-                    model.AddBoolOr([earlier_pickup.Not(), assign[other_t, v].Not()]).OnlyEnforceIf(not_first_due_to_other.Not())
-                    model.Add(is_first_trade <= 1 - not_first_due_to_other)
-                
-                # Calculate ballast distance from vessel's initial position to first trade pickup
-                initial_travel_distance = self.headquarters.get_network_distance(vessel_location, trades[t].origin_port)
-                initial_travel_time = vessel.get_travel_time(initial_travel_distance)
-                
-                # Add ballast consumption for this initial positioning
-                initial_ballast_consumption = vessel.get_ballast_consumption(initial_travel_time, vessel.speed)
-                
-                # Create a temporary variable to hold this consumption if this is the first trade
-                temp_ballast_var = model.NewIntVar(0, ceil(initial_ballast_consumption * 10), f"first_ballast_{t}_v{v}")
-                model.Add(temp_ballast_var == ceil(initial_ballast_consumption * 10)).OnlyEnforceIf(is_first_trade)
-                model.Add(temp_ballast_var == 0).OnlyEnforceIf(is_first_trade.Not())
-                
-                ballast_consumption_expr.append(temp_ballast_var)
-        
-        # general idle cost
-        # Define variables to track which vessels are used
-        vessel_used = {}
-        for v in range(len(fleets)):
-            vessel_used[v] = model.NewBoolVar(f"vessel_used_{v}")
-            # A vessel is used if it is assigned to at least one trade
-            # Create a list of all assignment variables for this vessel
-            vessel_assignments = [assign[t, v] for t in range(len(trades))]
-            # If any assignment is 1, then vessel_used should be 1
-            model.AddBoolOr(vessel_assignments).OnlyEnforceIf(vessel_used[v])
-            # If all assignments are 0, then vessel_used should be 0
-            model.AddBoolAnd([assign[t, v].Not() for t in range(len(trades))]).OnlyEnforceIf(vessel_used[v].Not())
-        
-        # Add idle cost for each vessel
-        for v in range(len(fleets)):
-            idle_consumption_expr.append(vessel_used[v] * fleets[v].get_idle_consumption(max_time - start_time))
+                is_first_trade_for_v = model.NewBoolVar(f"is_first_{t}_for_{v}")
+                is_first_trade_list_for_v.append(is_first_trade_for_v)
 
-        # # Original code for subsequent trips
+                # --- Define is_first_trade_for_v (same logic as before) ---
+                # 1. Must be assigned to v
+                model.AddImplication(is_first_trade_for_v, assign[t, v])
+                # 2. No other assigned trade t_prime has pickup_time[t_prime] < pickup_time[t]
+                earlier_and_assigned_conditions = []
+                for t_prime in range(len(trades)):
+                    if t == t_prime: continue
+                    t_prime_assigned = assign[t_prime, v]
+                    t_prime_earlier = model.NewBoolVar(f"aux_earlier_{t_prime}_{t}_{v}")
+                    model.Add(pickup_time[t_prime] < pickup_time[t]).OnlyEnforceIf(t_prime_earlier)
+                    model.Add(pickup_time[t_prime] >= pickup_time[t]).OnlyEnforceIf(t_prime_earlier.Not())
+                    t_prime_is_earlier_and_assigned = model.NewBoolVar(f"aux_earlier_assigned_{t_prime}_{t}_{v}")
+                    model.AddBoolAnd([t_prime_assigned, t_prime_earlier]).OnlyEnforceIf(t_prime_is_earlier_and_assigned)
+                    model.AddBoolOr([t_prime_assigned.Not(), t_prime_earlier.Not()]).OnlyEnforceIf(t_prime_is_earlier_and_assigned.Not())
+                    earlier_and_assigned_conditions.append(t_prime_is_earlier_and_assigned)
+                model.AddBoolAnd([assign[t, v]] + [b.Not() for b in earlier_and_assigned_conditions]).OnlyEnforceIf(is_first_trade_for_v)
+                model.AddBoolOr([assign[t, v].Not()] + earlier_and_assigned_conditions).OnlyEnforceIf(is_first_trade_for_v.Not())
+
+                # --- Calculate Initial Travel Time ---
+                trade_origin = trades_with_id[t].origin_port
+                travel_distance = self.headquarters.get_network_distance(vessel_location, trade_origin)
+                initial_travel_time = 0 # Default
+                can_reach = True
+                if travel_distance is None or travel_distance == float('inf'):
+                    can_reach = False
+                    model.Add(assign[t, v] == 0) # Cannot assign if unreachable
+                else:
+                    initial_travel_time = ceil(vessel.get_travel_time(travel_distance))
+                    latest_pickup_time = trades_with_id[t].latest_pickup
+                    if initial_travel_time > latest_pickup_time:
+                        can_reach = False
+                        model.Add(assign[t, v] == 0) # Cannot assign if arrival is too late
+
+                # --- Initial Ballast Cost ---
+                initial_ballast_consumption = 0
+                if can_reach:
+                     initial_ballast_consumption = vessel.get_ballast_consumption(initial_travel_time, vessel.speed)
+
+                scaled_initial_ballast_cons = ceil(initial_ballast_consumption * SCALE_FACTOR)
+                temp_initial_ballast_var = model.NewIntVar(0, scaled_initial_ballast_cons, f"initial_ballast_{t}_{v}")
+                # Set cost only if it's the first trade and reachable
+                model.Add(temp_initial_ballast_var == scaled_initial_ballast_cons).OnlyEnforceIf(is_first_trade_for_v)
+                model.Add(temp_initial_ballast_var == 0).OnlyEnforceIf(is_first_trade_for_v.Not())
+                ballast_consumption_expr.append(temp_initial_ballast_var)
+
+
+                # --- Initial Idle Time and Cost ---
+                # Earliest arrival time at pickup location
+                earliest_arrival_time = current_time + initial_travel_time
+
+                # Create variable for initial idle time
+                initial_idle_time = model.NewIntVar(0, max_time, f"initial_idle_{t}_{v}")
+
+                # Calculate idle time: pickup_time[t] - earliest_arrival_time
+                # This must be non-negative. The Add(>=) constraint handles the max(0, ...) implicitly.
+                model.Add(initial_idle_time >= pickup_time[t] - earliest_arrival_time).OnlyEnforceIf(is_first_trade_for_v)
+
+                # If not the first trade, initial idle time is 0
+                model.Add(initial_idle_time == 0).OnlyEnforceIf(is_first_trade_for_v.Not())
+
+                # Calculate initial idle cost
+                idle_consumption_rate = ceil(vessel._propelling_engine._idle_consumption) # Per time unit
+                scaled_idle_rate = ceil(idle_consumption_rate * SCALE_FACTOR)
+                # Estimate max possible initial idle cost
+                max_possible_idle_cost = ceil(max_time * scaled_idle_rate)
+
+                temp_initial_idle_cost_var = model.NewIntVar(0, max_possible_idle_cost, f"initial_idle_cost_{t}_{v}")
+                # Cost = rate * time
+                model.Add(temp_initial_idle_cost_var == initial_idle_time * scaled_idle_rate) # Rate already scaled
+
+                # Add this cost component to the total idle cost expression list
+                idle_consumption_expr.append(temp_initial_idle_cost_var)
+
+                # --- Core First Trade Pickup Time Constraint ---
+                if can_reach:
+                    # pickup_time[t] >= earliest_arrival_time is needed
+                    # This is implicitly handled by initial_idle_time >= pickup_time[t] - earliest_arrival_time AND initial_idle_time >= 0
+                    # But we can add it explicitly for clarity if desired:
+                    # model.Add(pickup_time[t] >= earliest_arrival_time).OnlyEnforceIf(is_first_trade_for_v)
+                    pass # Covered by idle time calculation
+
+
+            # Constraint: At most one trade can be the first for vessel v
+            model.AddAtMostOne(is_first_trade_list_for_v)
+
+
+        # Constraint: capacity constraint
         # for v, vessel in enumerate(fleets):
-        #     for t1 in range(len(trades)):
-        #         for t2 in range(len(trades)):
-        #             if t1 == t2:
-        #                 continue
-        #             # Bool: Are t1 and t2 both assigned to v
-        #             both_assigned = model.NewBoolVar(f"pair_{t1}_{t2}_v{v}")
-        #             model.AddBoolAnd([assign[t1, v], assign[t2, v]]).OnlyEnforceIf(both_assigned)
-        #             model.AddBoolOr([assign[t1, v].Not(), assign[t2, v].Not()]).OnlyEnforceIf(both_assigned.Not())
-        #             # add ordering condition:
-        #             t2_after_t1 = model.NewBoolVar(f"t2_after_t1_{t1}_{t2}_v{v}")
-        #             model.Add(pickup_time[t2] >= dropoff_time[t1] + 1).OnlyEnforceIf(t2_after_t1)
-        #             model.Add(pickup_time[t2] < dropoff_time[t1] + 1).OnlyEnforceIf(t2_after_t1.Not())
-        #             #compute gap time check if it exceeds unloading time + travel time
-        #             gap_time = model.NewIntVar(0, max_time, f"gap_{t1}_{t2}_v{v}")
-        #             model.Add(gap_time == pickup_time[t2] - dropoff_time[t1])
-        #             # gap between t1 and t2 must be at least unloading time + travel time
-        #             travel_distance = self.headquarters.get_network_distance(trades[t1].destination_port, trades[t2].origin_port)
-        #             travel_time = ceil(vessel.get_travel_time(travel_distance))
-        #             min_gap_required = ceil(vessel.get_loading_time(trades[t1].cargo_type, trades[t1].amount) + travel_time)
-        #             model.Add(gap_time >= min_gap_required).OnlyEnforceIf(both_assigned)
-        #             gap_ok = model.NewBoolVar(f"gap_ok_{t1}_{t2}_v{v}")
-        #             model.Add(gap_time >= min_gap_required).OnlyEnforceIf(gap_ok)
-        #             model.Add(gap_time < min_gap_required).OnlyEnforceIf(gap_ok.Not())
-
-        #             idle_time = model.NewIntVar(0, max_time, f"idle_{t1}_{t2}_v{v}")
-        #             ballast_time = model.NewIntVar(0, max_time, f"ballast_{t1}_{t2}_v{v}")
-        #             # model.Add(idle_time == 0).OnlyEnforceIf(both_assigned.Not())
-        #             # model.Add(idle_time == 0).OnlyEnforceIf(t2_after_t1.Not())
-        #             # model.Add(idle_time == 0).OnlyEnforceIf(gap_ok.Not())
-        #             valid_sequence = model.NewBoolVar(f"valid_sequence_{t1}_{t2}_v{v}")
-        #             model.AddBoolAnd([both_assigned, t2_after_t1, gap_ok]).OnlyEnforceIf(valid_sequence)
-        #             model.AddBoolOr([both_assigned.Not(), t2_after_t1.Not(), gap_ok.Not()]).OnlyEnforceIf(valid_sequence.Not())
-        #             # Set idle_time value when we have a valid sequence
-        #             model.Add(idle_time == gap_time - min_gap_required).OnlyEnforceIf(valid_sequence)
-        #             model.Add(idle_time == 0).OnlyEnforceIf(valid_sequence.Not())
-
-        #             # Set ballast_time value when we have a valid sequence
-        #             model.Add(ballast_time == travel_time).OnlyEnforceIf(valid_sequence)
-        #             model.Add(ballast_time == 0).OnlyEnforceIf(valid_sequence.Not())
-        #             # idle_consumption_expr.append(vessel.get_idle_consumption(idle_time))
-        #             idle_consumption_rate = ceil(vessel._propelling_engine._idle_consumption)
-        #             idle_consumption_expr.append(idle_time * idle_consumption_rate * 1000) # linear approximation
-        #             # model.Add(ballast_time == travel_time).OnlyEnforceIf([
-        #             #     both_assigned, t2_after_t1, gap_ok
-        #             # ])
-        #             # ballast_consumption_expr.append(vessel.get_ballast_consumption(ballast_time, vessel.speed))
-        #             # Get the ballast consumption rate parameters
-        #             ballast_rate = vessel._propelling_engine._ballast_consumption_rate
-        #             base = ballast_rate.base
-        #             factor = ballast_rate.factor
-        #             speed_power = ballast_rate.speed_power
-                    # ballast_consumption_expr.append(calculate_ballast_consumption(vessel.speed, travel_time)) # original
-                    # ballast_consumption_expr.append(ballast_time * ceil(base * pow(vessel.speed, speed_power) * factor)) # linear approximation
-
-        # max_travel_distance = max(trades_with_id[t].travel_distance for t in range(len(trades)))
-        # min_fleet_speed = min(vessel.speed for vessel in fleets)
-        # max_travel_time = max_travel_distance / min_fleet_speed
-        # max_dropoff_time = max(trade.time_window[3] for trade in trades)
-        # max_idle_consumption = len(fleets) * fleets[0].get_idle_consumption(max_dropoff_time - start_time)
-
-        # max_ballast_legs = len(fleets) * len(trades)
-        # max_ballast_consumption = max_ballast_legs * fleets[0].get_ballast_consumption(max_travel_time, fleets[0].speed)
-
-        # big_M = ceil(max_idle_consumption + max_ballast_consumption)
-        # total_idle_cost = model.NewIntVar(0, big_M, "total_idle_cost")
-        # total_ballast_cost = model.NewIntVar(0, big_M, "total_ballast_cost")
-
-        # model.Add(total_idle_cost == sum(idle_consumption_expr))
-        # model.Add(total_ballast_cost == sum(ballast_consumption_expr))
+        #     model.Add(sum(assign[t, v] * trade.amount for t, trade in enumerate(trades)) <= vessel.capacity)
+        for v, vessel in enumerate(fleets):
+            intervals = []
+            demands = []
+            for t, trade in enumerate(trades):
+                interval = model.NewOptionalIntervalVar(
+                    pickup_time[t], 
+                    trades_with_id[t].duration,  # duration: loading time + travel time
+                    dropoff_time[t],
+                    assign[t, v],
+                    f'interval_{t}_{v}'
+                )
+                intervals.append(interval)
+                demands.append(ceil(trade.amount))
+            capacity_list = vessel.capacities_and_loading_rates
+            model.AddCumulative(intervals, demands, ceil(capacity_list[0].capacity))
 
         # Objective: minimize the total cost
         fuel_expr = []
@@ -503,13 +491,18 @@ class Solver:
                     if solver.Value(assign[t, v]):
                         served = True
                         print(f"Trade {t} is served by vessel {v}")
-                        print(f"  Pickup:  {solver.Value(pickup_time[t])} at port {trade.origin_port}")
-                        print(f"  Dropoff: {solver.Value(dropoff_time[t])} at port {trade.destination_port}")
+                        print(f"  Pickup:  {solver.Value(pickup_time[t])} at port {trade.origin_port}, earliest: {trade.time_window[0]}, latest: {trade.time_window[1]}")
+                        print(f"  Dropoff: {solver.Value(dropoff_time[t])} at port {trade.destination_port}, earliest: {trade.time_window[2]}, latest: {trade.time_window[3]}")
                 if not served:
                     print(f"Trade {t} is unserved (penalty {trade.amount})")
             print("Total cost:", solver.ObjectiveValue())
-
-
+            # print the depot to the origin port of each vessel
+            for v, vessel in enumerate(fleets):
+                for t, trade in enumerate(trades):
+                    if solver.Value(assign[t, v]):
+                        travel_distance = self.headquarters.get_network_distance(vessel.location, trade.origin_port)
+                        travel_time = vessel.get_travel_time(travel_distance)
+                        print(f"Vessel {v} starts at depot {vessel.location} and ends at {trade.origin_port}, travel time: {travel_time}, start time: {trade.time}, arrival time: {trade.time + travel_time}")
             # Create a dictionary to store the assignment values
             assignment_values = {}
             
@@ -671,24 +664,24 @@ class OurCompanyn(TradingCompany):
                         dropoff_interval_index = self.find_interval_index(solution['dropoff_times'][i], generated_intervals)
                         new_schedule.add_transportation(trades[i], pickup_interval_index, dropoff_interval_index)
 
-                    # if new_schedule.verify_schedule():
-                    schedules[current_vessel] = new_schedule # update the schedule
-                    scheduled_trades.append(trades[i]) # add the trade to the scheduled trades
-                    tw_each_vessel[current_vessel].append((solution['pickup_times'][i], solution['dropoff_times'][i])) # update the time window for the vessel
-                    # calculate the cost of the schedule
-                    loading_time = current_vessel.get_loading_time(trades[i].cargo_type, trades[i].amount)
-                    loading_cost = current_vessel.get_loading_consumption(loading_time)
-                    unloading_costs = current_vessel.get_unloading_consumption(loading_time)
-                    travel_time = solution['dropoff_times'][i] - solution['pickup_times'][i]
-                    travel_cost = current_vessel.get_laden_consumption(travel_time, current_vessel.speed) # not accurate
-                    total_cost = loading_cost + unloading_costs + travel_cost
-                    costs[trades[i]] = total_cost * self._profit_factor
-                    # remove the trade from the temp_trades
-                    total_trades_per_vessel -= 1
-                    assignment_matrix[i, v] = 0
-            if schedules[current_vessel].verify_schedule():
+                    if new_schedule.verify_schedule():
+                        schedules[current_vessel] = new_schedule # update the schedule
+                        scheduled_trades.append(trades[i]) # add the trade to the scheduled trades
+                        tw_each_vessel[current_vessel].append((solution['pickup_times'][i], solution['dropoff_times'][i])) # update the time window for the vessel
+                        # calculate the cost of the schedule
+                        loading_time = current_vessel.get_loading_time(trades[i].cargo_type, trades[i].amount)
+                        loading_cost = current_vessel.get_loading_consumption(loading_time)
+                        unloading_costs = current_vessel.get_unloading_consumption(loading_time)
+                        travel_time = solution['dropoff_times'][i] - solution['pickup_times'][i]
+                        travel_cost = current_vessel.get_laden_consumption(travel_time, current_vessel.speed) # not accurate
+                        total_cost = loading_cost + unloading_costs + travel_cost
+                        costs[trades[i]] = total_cost * self._profit_factor
+                        # remove the trade from the temp_trades
+                        total_trades_per_vessel -= 1
+                        assignment_matrix[i, v] = 0
+            # if schedules.get(current_vessel, current_vessel.schedule).verify_schedule():
                 # print(f"Vessel {current_vessel} schedule is valid.")
-                pass
+                # pass
         # return ScheduleProposal(schedules, scheduled_trades, costs)
                     
                     
