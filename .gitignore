@@ -27,3 +27,7 @@ venv/
 .DS_Store
 
 *.json
+
+*.ipynb_checkpoints
+
+*.pdf
