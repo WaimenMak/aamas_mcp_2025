@@ -274,7 +274,7 @@ class GreedyComanyn(TradingCompany):
                     schedules[best_vessel] = best_vessel_schedule
                     pick_up_time[trade] = best_pickup_time[trade]
                     drop_off_time[trade] = best_dropoff_time[trade]
-                    costs[trade] = cost_trade  # naive calculate the cost based on travel time
+                    costs[trade] = cost_trade * self._profit_factor  # naive calculate the cost based on travel time
             time_end = time.time()
             if time_end - time_start > 2 or last_rejected_trade == current_trade:
             # if last_rejected_trade == current_trade:
@@ -282,20 +282,20 @@ class GreedyComanyn(TradingCompany):
         # print(f"Time taken: {time_end - time_start} seconds")
 
         # accurately calculate the cost based on the actual schedule, overlap trades divide the cost by the number of trades on vessel schedule
-        for vessel, schedule in schedules.items():
-            trades_list = schedule.get_scheduled_trades() # already sorted by time
-            for i in range(len(trades_list)):
-                # check if overlap with the following trade
-                for j in range(i+1, len(trades_list)):
-                    if drop_off_time[trades_list[i]] > pick_up_time[trades_list[j]]:
-                        overlap_time = drop_off_time[trades_list[i]] - pick_up_time[trades_list[j]]
-                        overlap_cost = vessel.get_laden_consumption(overlap_time, vessel.speed)
-                        costs[trades_list[i]] -= overlap_cost / 2
-                        costs[trades_list[j]] -= overlap_cost / 2
-                        if costs[trades_list[i]] < 0:
-                            print(f"Cost for trade {trades_list[i]} is negative: {costs[trades_list[i]]}")
-                        if costs[trades_list[j]] < 0:
-                            print(f"Cost for trade {trades_list[j]} is negative: {costs[trades_list[j]]}")
+        # for vessel, schedule in schedules.items():
+        #     trades_list = schedule.get_scheduled_trades() # already sorted by time
+        #     for i in range(len(trades_list)):
+        #         # check if overlap with the following trade
+        #         for j in range(i+1, len(trades_list)):
+        #             if drop_off_time[trades_list[i]] > pick_up_time[trades_list[j]]:
+        #                 overlap_time = drop_off_time[trades_list[i]] - pick_up_time[trades_list[j]]
+        #                 overlap_cost = vessel.get_laden_consumption(overlap_time, vessel.speed)
+        #                 costs[trades_list[i]] -= overlap_cost / 2
+        #                 costs[trades_list[j]] -= overlap_cost / 2
+        #                 if costs[trades_list[i]] < 0:
+        #                     print(f"Cost for trade {trades_list[i]} is negative: {costs[trades_list[i]]}")
+        #                 if costs[trades_list[j]] < 0:
+        #                     print(f"Cost for trade {trades_list[j]} is negative: {costs[trades_list[j]]}")
 
 
         return ScheduleProposal(schedules, scheduled_trades, costs)
