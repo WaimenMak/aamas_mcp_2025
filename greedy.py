@@ -233,7 +233,8 @@ class GreedyComanyn(TradingCompany):
             unloading_cost = best_vessel.get_unloading_consumption(load_time_best_trade)
             
             # Use the best_pickup_time and best_dropoff_time that correspond to the best assignment
-            travel_time = best_dropoff_time[best_trade] - best_pickup_time[best_trade]
+            # travel_time = best_dropoff_time[best_trade] - best_pickup_time[best_trade]
+            travel_time = best_vessel.get_travel_time(headquarters.get_network_distance(best_trade.origin_port, best_trade.destination_port))
             travel_cost = best_vessel.get_laden_consumption(travel_time, best_vessel.speed)
             total_cost = loading_cost + unloading_cost + travel_cost
             
@@ -280,6 +281,12 @@ class GreedyComanyn(TradingCompany):
             # if last_rejected_trade == current_trade:
                 break
         # print(f"Time taken: {time_end - time_start} seconds")
+
+        # split the cost by the number of trades on vessel schedule
+        # for vessel, schedule in schedules.items():
+        #     cost, idle_time, pickup, dropoff = self.simulate_shcedule_cost(vessel, schedule.get_simple_schedule(), self._headquarters)
+        #     for trade in schedule.get_scheduled_trades():
+        #         costs[trade] = cost/len(schedule.get_scheduled_trades()) * self._profit_factor
 
         # accurately calculate the cost based on the actual schedule, overlap trades divide the cost by the number of trades on vessel schedule
         # for vessel, schedule in schedules.items():

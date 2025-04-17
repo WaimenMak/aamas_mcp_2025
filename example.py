@@ -27,7 +27,7 @@ def build_specification():
 
     # greedy
     my_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
-    specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.5))
+    specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.4))
 
     arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
     specifications_builder.add_company(
