@@ -153,6 +153,8 @@ class OurCompanyn(TradingCompany):
                         # remove the trade from the temp_trades
                         total_trades_per_vessel -= 1
                         assignment_matrix[i, v] = 0
+                        simple_schedule = schedules[current_vessel].get_simple_schedule()
+                        print(f"Vessel {current_vessel} schedule is {simple_schedule}")
             # if schedules.get(current_vessel, current_vessel.schedule).verify_schedule():
                 # print(f"Vessel {current_vessel} schedule is valid.")
                 # pass

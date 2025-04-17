@@ -8,6 +8,7 @@
 from mable.examples import environment, fleets, companies
 
 import groupn
+import greedy
 
 
 def build_specification():
@@ -20,8 +21,13 @@ def build_specification():
     # my_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
     # specifications_builder.add_company(groupn.Companyn.Data(groupn.Companyn, my_fleet, groupn.Companyn.__name__))
 
+    # solver
+    # my_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
+    # specifications_builder.add_company(groupn.OurCompanyn.Data(groupn.OurCompanyn, my_fleet, groupn.OurCompanyn.__name__, profit_factor=1.5))
+
+    # greedy
     my_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
-    specifications_builder.add_company(groupn.OurCompanyn.Data(groupn.OurCompanyn, my_fleet, groupn.OurCompanyn.__name__, profit_factor=1.5))
+    specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.5))
 
     arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
     specifications_builder.add_company(

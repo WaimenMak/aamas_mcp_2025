@@ -14,8 +14,8 @@ from loguru import logger
 from mable.cargo_bidding import Bid
 from copy import deepcopy
 from math import ceil
-import numpy as np
-from collections import defaultdict
+# import numpy as np
+# from collections import defaultdict
 
 class Solver:
     def __init__(self, headquarters):
@@ -383,7 +383,14 @@ class Solver:
                          model.Add(dropoff_time[t2] >= pickup_time[t1] + int(min_time_from_t1pickup_to_t2dropoff_start)).OnlyEnforceIf(pick_pick_drop_condition_t2)
 
         # --- New Constraint: for two consecutive trades, the dropoff time of the first trade must be before the pickup time of the second trade ---
+        idle_consumption_expr = []
+        SCALE_FACTOR = 100.0 # Adjust this factor as needed
         for v, vessel in enumerate(fleets):
+            # Pre-calculate vessel-specific values outside the inner loops
+            idle_consumption_rate = ceil(vessel._propelling_engine._idle_consumption)
+            scaled_idle_rate = ceil(idle_consumption_rate * SCALE_FACTOR)
+            max_possible_inter_idle_cost = ceil(max_time * scaled_idle_rate) # Upper bound for inter-trade idle cost
+
             for t1 in range(len(trades)):
                 for t2 in range(len(trades)):
                     if t1 == t2:
@@ -419,11 +426,32 @@ class Solver:
                     model.AddBoolAnd([both_assigned_seq, t1_dropoff_before_t2_pickup_seq]).OnlyEnforceIf(sequential_flow)
                     model.AddBoolOr([both_assigned_seq.Not(), t1_dropoff_before_t2_pickup_seq.Not()]).OnlyEnforceIf(sequential_flow.Not())
                     
-                    # Add the key constraint: pickup_time[t2] >= dropoff_time[t1] + unload_time_t1 + travel_time_t1d_t2o
+                    # --- Inter-Trade Idle Time and Cost Calculation ---
+                    inter_trade_idle_time = model.NewIntVar(0, max_time, f"inter_idle_{v}_{t1}_{t2}")
+                    inter_trade_idle_cost_var = model.NewIntVar(0, max_possible_inter_idle_cost, f"inter_idle_cost_{v}_{t1}_{t2}")
+
                     if can_travel_t1d_t2o:
+                        # Earliest time vessel can start pickup for t2 after finishing t1 dropoff, unloading, and traveling
                         min_pickup_time_t2 = dropoff_time[t1] + unload_time_t1 + travel_time_t1d_t2o
+
+                        # Add the key constraint: pickup_time[t2] must be after the minimum required time
                         model.Add(pickup_time[t2] >= min_pickup_time_t2).OnlyEnforceIf(sequential_flow)
                         # This ensures that when t1 is processed before t2, t2's pickup respects the full sequence timing
+
+                        # Calculate the idle time: actual pickup time - earliest possible pickup time
+                        # Add(>=) handles the max(0, ...) implicitly
+                        model.Add(inter_trade_idle_time >= pickup_time[t2] - min_pickup_time_t2).OnlyEnforceIf(sequential_flow)
+
+                    # If the sequence doesn't happen (or is impossible), idle time is 0
+                    model.Add(inter_trade_idle_time == 0).OnlyEnforceIf(sequential_flow.Not())
+
+                    # Calculate the cost for this potential idle period
+                    model.Add(inter_trade_idle_cost_var == inter_trade_idle_time * scaled_idle_rate)
+
+                    # Add the inter-trade idle cost to the total idle cost expression
+                    idle_consumption_expr.append(inter_trade_idle_cost_var)
+                    # --- End Inter-Trade Idle Calculation ---
+
 
         # Constraint: capacity constraint
         # for v, vessel in enumerate(fleets):
@@ -445,7 +473,7 @@ class Solver:
             model.AddCumulative(intervals, demands, ceil(capacity_list[0].capacity))
 
         # Modelling the idle time and ballast time
-        idle_consumption_expr = []
+        # idle_consumption_expr = []
         ballast_consumption_expr = []
 
         # --- Initial Positioning and Idle/Ballast Consumption ---
