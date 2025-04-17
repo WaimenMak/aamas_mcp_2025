@@ -31,3 +31,5 @@ venv/
 *.ipynb_checkpoints
 
 *.pdf
+
+*.csv
