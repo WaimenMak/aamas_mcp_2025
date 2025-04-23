@@ -6,14 +6,14 @@
 
 
 from mable.examples import environment, fleets, companies
-
+from Agents import  Solver
 import groupn
 import greedy
 
 
 def build_specification():
-    number_of_month = 12
-    trades_per_auction = 5
+    number_of_month = 1
+    trades_per_auction = 2
     specifications_builder = environment.get_specification_builder(
         trades_per_occurrence=trades_per_auction,
         num_auctions=number_of_month)
@@ -26,20 +26,22 @@ def build_specification():
     # specifications_builder.add_company(groupn.OurCompanyn.Data(groupn.OurCompanyn, my_fleet, groupn.OurCompanyn.__name__, profit_factor=1.5))
 
     # greedy
-    my_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
+    num = 1
+    # my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    my_fleet = fleets.mixed_fleet(num_vlcc=num)
     specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.4))
 
-    arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
-    specifications_builder.add_company(
-        companies.MyArchEnemy.Data(
-            companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
-            profit_factor=1.5))
-
-    the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
-    specifications_builder.add_company(
-        companies.TheScheduler.Data(
-            companies.TheScheduler, the_scheduler_fleet, "The Scheduler LP",
-            profit_factor=1.4))
+    # arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    # specifications_builder.add_company(
+    #     companies.MyArchEnemy.Data(
+    #         companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
+    #         profit_factor=1.5))
+    #
+    # the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    # specifications_builder.add_company(
+    #     companies.TheScheduler.Data(
+    #         companies.TheScheduler, the_scheduler_fleet, "The Scheduler LP",
+    #         profit_factor=1.4))
 
     sim = environment.generate_simulation(
         specifications_builder,
