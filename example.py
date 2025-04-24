@@ -9,11 +9,12 @@ from mable.examples import environment, fleets, companies
 from Agents import  Solver
 import groupn
 import greedy
+import kbest
 
 
 def build_specification():
-    number_of_month = 1
-    trades_per_auction = 2
+    number_of_month = 12
+    trades_per_auction = 10
     specifications_builder = environment.get_specification_builder(
         trades_per_occurrence=trades_per_auction,
         num_auctions=number_of_month)
@@ -26,17 +27,25 @@ def build_specification():
     # specifications_builder.add_company(groupn.OurCompanyn.Data(groupn.OurCompanyn, my_fleet, groupn.OurCompanyn.__name__, profit_factor=1.5))
 
     # greedy
-    num = 1
+    # num = 1
     # my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    my_fleet = fleets.mixed_fleet(num_vlcc=num)
-    specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.4))
+    # # my_fleet = fleets.mixed_fleet(num_suezmax=num, num_vlcc=num)
+    # specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.4))
 
+
+    # kbest
+    num = 1
+    my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    specifications_builder.add_company(kbest.KBestComanyn.Data(kbest.KBestComanyn, my_fleet, kbest.KBestComanyn.__name__, profit_factor=1.4))
+
+    # arch enemy
     # arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
     # specifications_builder.add_company(
     #     companies.MyArchEnemy.Data(
     #         companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
     #         profit_factor=1.5))
-    #
+
+    # scheduler fleet
     # the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
     # specifications_builder.add_company(
     #     companies.TheScheduler.Data(

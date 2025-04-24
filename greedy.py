@@ -12,7 +12,7 @@ from marshmallow import fields
 import time
 
 
-def simulate_schedule_cost(vessel, vessel_schedule, headquarters=None):
+def simulate_schedule_cost(vessel, vessel_schedule, start_time, headquarters=None):
     """
     Input:
     vessel: vessel object
@@ -29,8 +29,8 @@ def simulate_schedule_cost(vessel, vessel_schedule, headquarters=None):
     """
     cost = 0
     current_hold_cargo = 0 # check if the vessel is holding cargo
-    start_time = vessel_schedule[0][1].time
-    current_time = vessel_schedule[0][1].time
+    # start_time = vessel_schedule[0][1].time
+    current_time = start_time
     idle_time = 0
     pick_up_time  = {}
     drop_off_time = {}
@@ -162,6 +162,7 @@ class GreedyComanyn(TradingCompany):
         super().__init__(fleet, name)
         self._profit_factor = profit_factor
         self.total_cost_until_now = 0
+        self.total_idle_time = 0
 
     @attrs.define
     class Data(TradingCompany.Data):
@@ -180,6 +181,7 @@ class GreedyComanyn(TradingCompany):
         best_dropoff_time = None
         best_insertion_pickup_index = None
         best_insertion_dropoff_index = None
+        start_time = trades[0].time
 
         for t, trade in enumerate(trades):
             if trade in scheduled_trades:
@@ -215,6 +217,7 @@ class GreedyComanyn(TradingCompany):
                             current_cost, idle_time, pickup, dropoff = simulate_schedule_cost(
                                 vessel, 
                                 new_schedule_vessel_insertion.get_simple_schedule(),
+                                start_time,
                                 headquarters
                             )
                             if current_cost < min_cost_for_vessel:
@@ -256,8 +259,8 @@ class GreedyComanyn(TradingCompany):
             unloading_cost = best_vessel.get_unloading_consumption(load_time_best_trade)
             
             # Use the best_pickup_time and best_dropoff_time that correspond to the best assignment
-            travel_time = best_dropoff_time[best_trade] - best_pickup_time[best_trade]
-            # travel_time = best_vessel.get_travel_time(headquarters.get_network_distance(best_trade.origin_port, best_trade.destination_port))
+            # travel_time = best_dropoff_time[best_trade] - best_pickup_time[best_trade]
+            travel_time = best_vessel.get_travel_time(headquarters.get_network_distance(best_trade.origin_port, best_trade.destination_port))
             travel_cost = best_vessel.get_laden_consumption(travel_time, best_vessel.speed)
             total_cost = loading_cost + unloading_cost + travel_cost
             
@@ -270,12 +273,15 @@ class GreedyComanyn(TradingCompany):
         schedules = {}
         costs = {}
         scheduled_trades = []
+        if len(trades) == 0:
+            return ScheduleProposal(schedules, scheduled_trades, costs)
         rejection_threshold = 1000000
         last_rejected_trade = None
         rejected_trades = []
         current_trade = None
         pick_up_time = {}
         drop_off_time = {}
+        start_time = trades[0].time
         time_start = time.time()
         while len(scheduled_trades) < len(trades):
             # if len(rejected_trades) > 1:
@@ -298,7 +304,7 @@ class GreedyComanyn(TradingCompany):
                     schedules[best_vessel] = best_vessel_schedule
                     pick_up_time[trade] = best_pickup_time[trade]
                     drop_off_time[trade] = best_dropoff_time[trade]
-                    # costs[trade] = cost_trade * self._profit_factor  # naive calculate the cost based on travel time
+                    costs[trade] = cost_trade * self._profit_factor  # naive calculate the cost based on travel time
             time_end = time.time()
             if time_end - time_start > 3 or last_rejected_trade == current_trade:
             # if last_rejected_trade == current_trade:
@@ -313,14 +319,26 @@ class GreedyComanyn(TradingCompany):
         for vessel in self._fleet:
             if vessel in schedules:
                 schedule = schedules[vessel]
-                cost, idle_time, pickup, dropoff = simulate_schedule_cost(vessel, schedule.get_simple_schedule(), self._headquarters)
+                cost, idle_time, pickup, dropoff = simulate_schedule_cost(
+                    vessel,
+                    schedule.get_simple_schedule(),
+                    start_time,
+                    self._headquarters)
             else:
-                cost, idle_time, pickup, dropoff = simulate_schedule_cost(vessel, [], self._headquarters)
+                cost, idle_time, pickup, dropoff = simulate_schedule_cost(
+                    vessel,
+                    [],
+                    start_time,
+                    self._headquarters)
 
-            for trade in schedule.get_scheduled_trades():
-                costs[trade] = cost/len(schedule.get_scheduled_trades()) * self._profit_factor
+            # for trade in schedule.get_scheduled_trades():
+            #     costs[trade] = cost/len(schedule.get_scheduled_trades()) * self._profit_factor
 
             self.total_cost_until_now += cost
+            self.total_idle_time += idle_time
+
+        print(f"Total cost until now: {self.total_cost_until_now}")
+        print(f"Total idle time until now: {self.total_idle_time}")
 
         # split the cost by the number of trades on vessel schedule
         # for vessel, schedule in schedules.items():
