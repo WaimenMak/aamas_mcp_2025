@@ -16,7 +16,7 @@ import attrs
 from marshmallow import fields
 import time
 import random
-from utils import simulate_schedule_cost_allocated_shared_arrival
+from utils import simulate_schedule_cost_allocated_shared_arrival, simulate_schedule_cost
 random.seed(1)
 from greedy import GreedyComanyn # Added alias if needed
 
@@ -175,8 +175,8 @@ class KBestBidComanyn(TradingCompany):
                 k_best_schedule_costs.append(schedule_cost)
 
             time_end = time.time()
-            # if time_end - time_start > 3:
-            #     break
+            if time_end - time_start > 55: # 50 seconds timeout
+                break
         time_end = time.time()
         print(f"Time taken: {time_end - time_start} seconds")
 
@@ -204,7 +204,7 @@ class KBestBidComanyn(TradingCompany):
                 if avg_cost < absolute_cost:
                     costs[trade] = avg_cost * self._profit_factor
                 else:
-                    costs[trade] = avg_cost * 1
+                    costs[trade] = avg_cost * 1.2
                 scheduled_trades.append(trade)
 
 
@@ -216,15 +216,15 @@ class KBestBidComanyn(TradingCompany):
         payment_per_trade = {}
         for one_contract in contracts:
             payment_per_trade[one_contract.trade] = one_contract.payment
-        # scheduling_proposal = self.schedule_trades(trades, payment_per_trade)
+        scheduling_proposal = self.schedule_trades(trades, payment_per_trade)
         # --- Use GreedyComanyn's propose_schedules logic ---
         # 1. Create a temporary instance of GreedyComanyn using this company's fleet/hq/etc.
         #    (Assumes __init__ signatures are compatible or GreedyComanyn doesn't need specific state)
-        temp_greedy_company = GreedyComanyn(self._fleet, self.name, self._profit_factor)
+        # temp_greedy_company = GreedyComanyn(self._fleet, self.name, self._profit_factor)
         # 2. Set up the headquarters for the temporary instance if needed (standard pattern)
-        temp_greedy_company._headquarters = self._headquarters
+        # temp_greedy_company._headquarters = self._headquarters
         # 3. Call the propose_schedules method on the temporary instance
-        scheduling_proposal = temp_greedy_company.propose_schedules(trades, payment_per_trade)
+        # scheduling_proposal = temp_greedy_company.propose_schedules(trades, payment_per_trade)
         # --- End of Greedy logic usage ---
 
         # Apply the schedules using the KBestBidComanyn's own apply_schedules method
@@ -301,6 +301,9 @@ class KBestBidComanyn(TradingCompany):
             schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, payment_per_trade)
             if len(schedule) > 0:
                 k_best_schedules.append(schedule)
+            end_time = time.time()
+            if end_time - start_time > 55:
+                break
 
         # choose the minimum cost schedule
         min_cost = float('inf')
@@ -308,7 +311,13 @@ class KBestBidComanyn(TradingCompany):
         for k, k_schedule in enumerate(k_best_schedules):
             schedule_total_cost = 0
             for vessel, schedule in k_schedule.items():
-                cost, _, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
+                # cost, _, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
+                #     vessel,
+                #     schedule,
+                #     start_time,
+                #     self._headquarters,
+                #     payment_per_trade)
+                cost, _, _, _ = simulate_schedule_cost(
                     vessel,
                     schedule,
                     start_time,

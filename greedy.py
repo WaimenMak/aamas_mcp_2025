@@ -4,180 +4,12 @@
 # @FileName: greedy
 # @Software: PyCharm
 
-import numpy as np
-from mable.cargo_bidding import TradingCompany, SimpleCompany
+from mable.cargo_bidding import TradingCompany
 from mable.examples.companies import ScheduleProposal
 import attrs
 from marshmallow import fields
 import time
-from utils import simulate_schedule_cost_allocated_shared_arrival
-
-
-def simulate_schedule_cost(vessel, vessel_schedule_copy, start_time, headquarters=None, payments=None):
-    """
-    Input:
-    vessel: vessel object
-    vesseel_schedule a list of tuples (type, timewindowtrade)
-    pick_up_time: a dictionary of the pick up time of the trades
-    drop_off_time: a dictionary of the drop off time of the trades
-    headquarters: the headquarters object
-    payments: a dictionary of the payments of the trades
-
-    Output:
-    cost: the cost of the schedule
-    idle_time: the idle time of the vessel
-    pick_up_time: the pick up time of the trades
-    drop_off_time: the drop off time of the trades
-    """
-    cost = 0
-    current_hold_cargo = 0 # check if the vessel is holding cargo
-    # start_time = vessel_schedule[0][1].time
-    current_time = start_time
-    idle_time = 0
-    pick_up_time  = {}
-    drop_off_time = {}
-
-    if len(vessel_schedule_copy) == 0:
-        idle_time += 720
-
-    vessel_schedule = vessel_schedule_copy.get_simple_schedule()
-    vessel_trades = vessel_schedule_copy.get_scheduled_trades()
-    for i in range(len(vessel_schedule)):
-        # handle None time_window
-        if vessel_schedule[i][1].time_window[0] is None:
-            earliest_pick_up_time = float('-inf')
-        if vessel_schedule[i][1].time_window[1] is None:
-            latest_pick_up_time = float('inf')
-        if vessel_schedule[i][1].time_window[2] is None:
-            earliest_drop_off_time = float('-inf')
-        if vessel_schedule[i][1].time_window[3] is None:
-            latest_drop_off_time = float('inf')
-        else:
-            earliest_pick_up_time = vessel_schedule[i][1].time_window[0]
-            latest_pick_up_time = vessel_schedule[i][1].time_window[1]
-            earliest_drop_off_time = vessel_schedule[i][1].time_window[2]
-            latest_drop_off_time = vessel_schedule[i][1].time_window[3]
-        if i == 0:
-            first_travel_distance = headquarters.get_network_distance(vessel.location, vessel_schedule[i][1].origin_port)
-            travel_time = vessel.get_travel_time(first_travel_distance)
-            current_time += travel_time
-            # check whether the vessel can reach on time
-            if current_time > latest_pick_up_time:  # the latest pick up time
-                return float('inf'), idle_time, pick_up_time, drop_off_time
-            if current_time < earliest_pick_up_time:  # earlier than the earliest pick up time
-                idle_time += earliest_pick_up_time - current_time
-                current_time = earliest_pick_up_time # update the current time
-
-
-            ballast_cost = vessel.get_ballast_consumption(travel_time, vessel.speed)
-            cost += ballast_cost
-            # record the pick up time
-            # pick_up_time = pick_up_time.get(vessel_schedule[i][1], current_time)
-            pick_up_time[vessel_schedule[i][1]] = current_time
-
-        else:
-            if vessel_schedule[i-1][0] == 'PICK_UP':
-                loading_time = vessel.get_loading_time(vessel_schedule[i-1][1].cargo_type, vessel_schedule[i-1][1].amount)
-                if vessel_schedule[i][0] == 'DROP_OFF':
-                    travel_distance = headquarters.get_network_distance(
-                        vessel_schedule[i-1][1].origin_port,
-                        vessel_schedule[i][1].destination_port)
-                    travel_time = vessel.get_travel_time(travel_distance)
-                    current_time += travel_time + loading_time
-
-                    if current_time > latest_drop_off_time:  # later than the latest drop off time of next trade
-                        return float('inf'), idle_time, pick_up_time, drop_off_time
-                    if current_time < earliest_drop_off_time:  # earlier than the earliest drop off time of next trade
-                        idle_time += earliest_drop_off_time - current_time
-                        current_time = earliest_drop_off_time # update the current time
-                    drop_off_time[vessel_schedule[i][1]] = current_time
-                    #check if the last movement
-                    if i == len(vessel_schedule) - 1:
-                        current_time += loading_time # unloading time
-                        loading_cost = vessel.get_unloading_consumption(loading_time) # unloading cost
-                        cost += loading_cost
-                        end_time = start_time + 720
-                        idle_time += end_time - current_time
-
-                elif vessel_schedule[i][0] == 'PICK_UP':
-                    travel_distance = headquarters.get_network_distance(
-                        vessel_schedule[i-1][1].origin_port,
-                        vessel_schedule[i][1].origin_port)
-                    travel_time = vessel.get_travel_time(travel_distance)
-                    current_time += travel_time + loading_time
-                    if current_time > latest_pick_up_time:  # later than the latest pick up time of next trade
-                        return float('inf'), idle_time, pick_up_time, drop_off_time
-                    if current_time < earliest_pick_up_time:  # earlier than the earliest pick up time of next trade
-                        idle_time += earliest_pick_up_time - current_time
-                        current_time = earliest_pick_up_time # update the current time
-                    pick_up_time[vessel_schedule[i][1]] = current_time
-
-                travel_laden_cost = vessel.get_laden_consumption(travel_time, vessel.speed)
-                loading_cost = vessel.get_loading_consumption(loading_time)
-                cost += travel_laden_cost + loading_cost
-                current_hold_cargo += vessel_schedule[i-1][1].amount # add the cargo to the vessel
-
-            elif vessel_schedule[i-1][0] == 'DROP_OFF':
-                unloading_time = vessel.get_loading_time(
-                    vessel_schedule[i-1][1].cargo_type,
-                    vessel_schedule[i-1][1].amount)
-                current_hold_cargo -= vessel_schedule[i-1][1].amount # remove the cargo from the vessel
-                if vessel_schedule[i][0] == 'PICK_UP':
-                    travel_distance = headquarters.get_network_distance(
-                        vessel_schedule[i-1][1].destination_port,
-                        vessel_schedule[i][1].origin_port)
-                    travel_time = vessel.get_travel_time(travel_distance)
-                    current_time += travel_time + unloading_time
-
-                    if current_time > latest_pick_up_time:  # the latest pick up time
-                        return float('inf'), idle_time, pick_up_time, drop_off_time
-
-                    if current_time < earliest_pick_up_time:  # earlier than the earliest pick up time
-                        idle_time += earliest_pick_up_time - current_time
-                        current_time = earliest_pick_up_time # update the current time
-
-                    pick_up_time[vessel_schedule[i][1]] = current_time
-
-                elif vessel_schedule[i][0] == 'DROP_OFF':
-                    travel_distance = headquarters.get_network_distance(
-                        vessel_schedule[i-1][1].destination_port,
-                        vessel_schedule[i][1].destination_port)
-
-                    travel_time = vessel.get_travel_time(travel_distance)
-                    current_time += travel_time + unloading_time
-
-                    if current_time > latest_drop_off_time:  # later than the latest drop off time of next trade
-                        return float('inf'), idle_time, pick_up_time, drop_off_time
-
-                    if current_time < earliest_drop_off_time:  # earlier than the earliest drop off time of next trade
-                        idle_time += earliest_drop_off_time - current_time
-                        current_time = earliest_drop_off_time # update the current time
-
-                    drop_off_time[vessel_schedule[i][1]] = current_time
-                    #check if the last movement
-                    if i == len(vessel_schedule) - 1:
-                        current_time += unloading_time
-                        unloading_cost = vessel.get_unloading_consumption(unloading_time) # unloading cost
-                        cost += unloading_cost
-                        end_time = start_time + 720
-                        idle_time += end_time - current_time
-
-                # check if the vessel is holding cargo
-                if current_hold_cargo == 0 and vessel_schedule[i][0] == 'PICK_UP':
-                    travel_ballast_cost = vessel.get_ballast_consumption(travel_time, vessel.speed)
-                    cost += travel_ballast_cost
-                else:
-                    travel_laden_cost = vessel.get_laden_consumption(travel_time, vessel.speed)
-                    cost += travel_laden_cost
-                unloading_cost = vessel.get_unloading_consumption(unloading_time)
-                cost += unloading_cost
-
-    cost += vessel.get_idle_consumption(idle_time)
-    if payments is not None:
-        for trade in vessel_trades:
-            cost -= payments[trade]
-            
-    return cost, idle_time, pick_up_time, drop_off_time
+from utils import simulate_schedule_cost_allocated_shared_arrival, simulate_schedule_cost
 
 class GreedyComanyn(TradingCompany):
     def __init__(self, fleet, name, profit_factor=1.65):
@@ -354,7 +186,7 @@ class GreedyComanyn(TradingCompany):
                 if trade_specific_costs[trade] < absolute_cost:
                     costs[trade] = trade_specific_costs[trade] * self._profit_factor
                 else:
-                    costs[trade] = trade_specific_costs[trade] * 1.2
+                    costs[trade] = trade_specific_costs[trade] * 1.3
         
         # for vessel in self._fleet:
         #     if vessel in schedules:
