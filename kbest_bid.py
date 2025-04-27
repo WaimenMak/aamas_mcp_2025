@@ -45,7 +45,7 @@ class KBestBidComanyn(TradingCompany):
         self._profit_factor = profit_factor
         self.total_cost_until_now = 0
         self.total_idle_time = 0
-        self.k_best = 10
+        self.k_best = 110
         # random.seed(1)
 
     @attrs.define
