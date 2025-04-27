@@ -427,3 +427,5 @@ def simulate_schedule_cost(vessel, vessel_schedule_copy, start_time, headquarter
             cost -= payments[trade]
 
     return cost, idle_time, pick_up_time, drop_off_time
+
+# def cal_efficiency(vessel, schedule, start_time, headquarters=None, payments=None):

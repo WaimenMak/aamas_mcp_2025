@@ -181,9 +181,9 @@ class KBestBidComanyn(TradingCompany):
         print(f"Time taken: {time_end - time_start} seconds")
 
         # get the minimum cost schedule
-        if len(k_best_schedule_costs) != 0:
-            min_cost_schedule_index = k_best_schedule_costs.index(min(k_best_schedule_costs))
-            schedules = k_best_schedules[min_cost_schedule_index]
+        # if len(k_best_schedule_costs) != 0:
+        #     min_cost_schedule_index = k_best_schedule_costs.index(min(k_best_schedule_costs))
+        #     schedules = k_best_schedules[min_cost_schedule_index]
         # -- bid based on average cost of k best schedules
         if len(k_best_schedules) != 0:
             trade_frequencies, trade_avg_costs = self.calculate_trade_frequency_and_avg_cost(
@@ -201,10 +201,11 @@ class KBestBidComanyn(TradingCompany):
                 loading_cost = self._fleet[0].get_loading_consumption(loading_time)
                 unloading_cost = self._fleet[0].get_unloading_consumption(loading_time)
                 absolute_cost = loading_cost + unloading_cost + travel_cost
-                if avg_cost < absolute_cost:
-                    costs[trade] = avg_cost * self._profit_factor
+                bid_price = 0.8 * avg_cost + 0.2 * absolute_cost
+                if bid_price < absolute_cost:
+                    costs[trade] = bid_price * self._profit_factor
                 else:
-                    costs[trade] = avg_cost * 1.2
+                    costs[trade] = bid_price * 1.2
                 scheduled_trades.append(trade)
 
 
@@ -316,7 +317,7 @@ class KBestBidComanyn(TradingCompany):
                 #     schedule,
                 #     start_time,
                 #     self._headquarters,
-                #     payment_per_trade)
+                #     payment_per_trade)    # there is a bug in this function, but for bidding it is ok
                 cost, _, _, _ = simulate_schedule_cost(
                     vessel,
                     schedule,
