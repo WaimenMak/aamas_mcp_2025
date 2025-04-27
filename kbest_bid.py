@@ -16,6 +16,7 @@ import attrs
 from marshmallow import fields
 import time
 import random
+random.seed(1)
 from collections import defaultdict
 from greedy import GreedyComanyn # Added alias if needed
 
@@ -299,8 +300,8 @@ class KBestBidComanyn(TradingCompany):
         self._profit_factor = profit_factor
         self.total_cost_until_now = 0
         self.total_idle_time = 0
-        self.k_best = 150
-        random.seed(1)
+        self.k_best = 100
+        # random.seed(1)
 
     @attrs.define
     class Data(TradingCompany.Data):
@@ -429,8 +430,8 @@ class KBestBidComanyn(TradingCompany):
                 k_best_schedule_costs.append(schedule_cost)
 
             time_end = time.time()
-            if time_end - time_start > 3:
-                break
+            # if time_end - time_start > 3:
+            #     break
         time_end = time.time()
         print(f"Time taken: {time_end - time_start} seconds")
 
@@ -447,7 +448,18 @@ class KBestBidComanyn(TradingCompany):
                 start_time)
 
             for trade, avg_cost in trade_avg_costs.items():
-                costs[trade] = avg_cost * self._profit_factor
+                # estimate the absolute cost of the trade OD
+                travel_distance = self._headquarters.get_network_distance(trade.origin_port, trade.destination_port)
+                travel_time = self._fleet[0].get_travel_time(travel_distance)
+                travel_cost = self._fleet[0].get_laden_consumption(travel_time, self._fleet[0].speed)
+                loading_time = self._fleet[0].get_loading_time(trade.cargo_type, trade.amount)
+                loading_cost = self._fleet[0].get_loading_consumption(loading_time)
+                unloading_cost = self._fleet[0].get_unloading_consumption(loading_time)
+                absolute_cost = loading_cost + unloading_cost + travel_cost
+                if avg_cost < absolute_cost:
+                    costs[trade] = avg_cost * self._profit_factor
+                else:
+                    costs[trade] = avg_cost * 1
                 scheduled_trades.append(trade)
 
 
@@ -459,15 +471,15 @@ class KBestBidComanyn(TradingCompany):
         payment_per_trade = {}
         for one_contract in contracts:
             payment_per_trade[one_contract.trade] = one_contract.payment
-        scheduling_proposal = self.schedule_trades(trades, payment_per_trade)
+        # scheduling_proposal = self.schedule_trades(trades, payment_per_trade)
         # --- Use GreedyComanyn's propose_schedules logic ---
         # 1. Create a temporary instance of GreedyComanyn using this company's fleet/hq/etc.
         #    (Assumes __init__ signatures are compatible or GreedyComanyn doesn't need specific state)
-        # temp_greedy_company = GreedyComanyn(self._fleet, self.name, self._profit_factor)
+        temp_greedy_company = GreedyComanyn(self._fleet, self.name, self._profit_factor)
         # 2. Set up the headquarters for the temporary instance if needed (standard pattern)
-        # temp_greedy_company.setup_round(headquarters=self._headquarters)
+        temp_greedy_company._headquarters = self._headquarters
         # 3. Call the propose_schedules method on the temporary instance
-        # scheduling_proposal = temp_greedy_company.propose_schedules(trades, payment_per_trade)
+        scheduling_proposal = temp_greedy_company.propose_schedules(trades, payment_per_trade)
         # --- End of Greedy logic usage ---
 
         # Apply the schedules using the KBestBidComanyn's own apply_schedules method
