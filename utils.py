@@ -431,7 +431,8 @@ def simulate_schedule_cost(vessel, vessel_schedule_copy, start_time, headquarter
 def cal_efficiency(schedules, headquarters, start_time):
     # calculate the total efficiency of the schedules
     actual_costs = 0
-    absolute_costs = 0
+    absolute_costs = 1e-6  # prevent division by zero
+    efficiency = 0
     for vessel, schedule in schedules.items():
         # get the actual cost of the schedule
         _, trades_specific_costs, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
@@ -447,8 +448,11 @@ def cal_efficiency(schedules, headquarters, start_time):
             loading_cost = vessel.get_loading_consumption(loading_time)
             unloading_cost = vessel.get_unloading_consumption(loading_time)
             absolute_cost = travel_cost + loading_cost + unloading_cost
+            if trade not in trades_specific_costs:
+                raise ValueError(f"Trade {trade.origin_port} {trade.destination_port} not found in trades_specific_costs")
             actual_cost = trades_specific_costs[trade]
             actual_costs += actual_cost
             absolute_costs += absolute_cost
 
-    return absolute_costs/actual_costs
+    efficiency = actual_costs/absolute_costs
+    return efficiency

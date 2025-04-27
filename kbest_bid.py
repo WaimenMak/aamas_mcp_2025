@@ -182,18 +182,18 @@ class KBestBidComanyn(TradingCompany):
 
         # ----- optional: calculate the efficiency of the k best schedules and sort them in descending order -----
         # calculate the efficiency of the k best schedules and sort them in descending order
-        k_efficiency = []
-        for k_schedule in k_best_schedules:
-            efficiency = cal_efficiency(k_schedule, self._headquarters, start_time)
-            k_efficiency.append(efficiency)
-        k_best_schedules = [x for _, x in sorted(zip(k_efficiency, k_best_schedules), key=lambda pair: pair[0], reverse=True)]
-        # get the minimum cost schedule
-        # if len(k_best_schedule_costs) != 0:
-        #     min_cost_schedule_index = k_best_schedule_costs.index(min(k_best_schedule_costs))
-        #     schedules = k_best_schedules[min_cost_schedule_index]
-        # -- bid based on average cost of k best schedules
-        # select the first 80% of the schedules according to the efficiency
-        k_best_schedules = k_best_schedules[:int(len(k_best_schedules)*0.8)]
+        # k_efficiency = []
+        # for k_schedule in k_best_schedules:
+        #     efficiency = cal_efficiency(k_schedule, self._headquarters, start_time)
+        #     k_efficiency.append(efficiency)
+        # k_best_schedules = [x for _, x in sorted(zip(k_efficiency, k_best_schedules), key=lambda pair: pair[0], reverse=True)]
+        # # get the minimum cost schedule
+        # # if len(k_best_schedule_costs) != 0:
+        # #     min_cost_schedule_index = k_best_schedule_costs.index(min(k_best_schedule_costs))
+        # #     schedules = k_best_schedules[min_cost_schedule_index]
+        # # -- bid based on average cost of k best schedules
+        # # select the first 80% of the schedules according to the efficiency
+        # k_best_schedules = k_best_schedules[:int(len(k_best_schedules)*0.8)]
         # ----- end of optional -----
 
         if len(k_best_schedules) != 0:
