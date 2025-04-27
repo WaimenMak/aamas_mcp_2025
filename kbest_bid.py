@@ -16,7 +16,7 @@ import attrs
 from marshmallow import fields
 import time
 import random
-from utils import simulate_schedule_cost_allocated_shared_arrival, simulate_schedule_cost
+from utils import simulate_schedule_cost_allocated_shared_arrival, simulate_schedule_cost, cal_efficiency
 random.seed(1)
 from greedy import GreedyComanyn # Added alias if needed
 
@@ -45,7 +45,7 @@ class KBestBidComanyn(TradingCompany):
         self._profit_factor = profit_factor
         self.total_cost_until_now = 0
         self.total_idle_time = 0
-        self.k_best = 100
+        self.k_best = 10
         # random.seed(1)
 
     @attrs.define
@@ -180,11 +180,22 @@ class KBestBidComanyn(TradingCompany):
         time_end = time.time()
         print(f"Time taken: {time_end - time_start} seconds")
 
+        # ----- optional: calculate the efficiency of the k best schedules and sort them in descending order -----
+        # calculate the efficiency of the k best schedules and sort them in descending order
+        k_efficiency = []
+        for k_schedule in k_best_schedules:
+            efficiency = cal_efficiency(k_schedule, self._headquarters, start_time)
+            k_efficiency.append(efficiency)
+        k_best_schedules = [x for _, x in sorted(zip(k_efficiency, k_best_schedules), key=lambda pair: pair[0], reverse=True)]
         # get the minimum cost schedule
         # if len(k_best_schedule_costs) != 0:
         #     min_cost_schedule_index = k_best_schedule_costs.index(min(k_best_schedule_costs))
         #     schedules = k_best_schedules[min_cost_schedule_index]
         # -- bid based on average cost of k best schedules
+        # select the first 80% of the schedules according to the efficiency
+        k_best_schedules = k_best_schedules[:int(len(k_best_schedules)*0.8)]
+        # ----- end of optional -----
+
         if len(k_best_schedules) != 0:
             trade_frequencies, trade_avg_costs = self.calculate_trade_frequency_and_avg_cost(
                 k_best_schedules,
@@ -201,7 +212,7 @@ class KBestBidComanyn(TradingCompany):
                 loading_cost = self._fleet[0].get_loading_consumption(loading_time)
                 unloading_cost = self._fleet[0].get_unloading_consumption(loading_time)
                 absolute_cost = loading_cost + unloading_cost + travel_cost
-                bid_price = 0.8 * avg_cost + 0.2 * absolute_cost
+                bid_price = 0.7 * avg_cost + 0.3 * absolute_cost
                 if bid_price < absolute_cost:
                     costs[trade] = bid_price * self._profit_factor
                 else:
