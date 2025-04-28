@@ -28,9 +28,9 @@ def build_specification():
     # specifications_builder.add_company(groupn.OurCompanyn.Data(groupn.OurCompanyn, my_fleet, groupn.OurCompanyn.__name__, profit_factor=1.5))
 
     # greedy
-    # my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    # # my_fleet = fleets.mixed_fleet(num_suezmax=num, num_vlcc=num)
-    # specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.4))
+    my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    # my_fleet = fleets.mixed_fleet(num_suezmax=num, num_vlcc=num)
+    specifications_builder.add_company(greedy.GreedyComanyn.Data(greedy.GreedyComanyn, my_fleet, greedy.GreedyComanyn.__name__, profit_factor=1.4))
 
 
     # kbest
@@ -38,22 +38,22 @@ def build_specification():
     # specifications_builder.add_company(kbest.KBestComanyn.Data(kbest.KBestComanyn, my_fleet, kbest.KBestComanyn.__name__, profit_factor=1.4))
 
     # kbest bid
-    my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    specifications_builder.add_company(kbest_bid.KBestBidComanyn.Data(kbest_bid.KBestBidComanyn, my_fleet, kbest_bid.KBestBidComanyn.__name__, profit_factor=1.4))
+    # my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    # specifications_builder.add_company(kbest_bid.KBestBidComanyn.Data(kbest_bid.KBestBidComanyn, my_fleet, kbest_bid.KBestBidComanyn.__name__, profit_factor=1.4))
 
     # arch enemy
-    arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    specifications_builder.add_company(
-        companies.MyArchEnemy.Data(
-            companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
-            profit_factor=1.5))
+    # arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    # specifications_builder.add_company(
+    #     companies.MyArchEnemy.Data(
+    #         companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
+    #         profit_factor=1.5))
 
     # scheduler fleet
-    the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    specifications_builder.add_company(
-        companies.TheScheduler.Data(
-            companies.TheScheduler, the_scheduler_fleet, "The Scheduler LP",
-            profit_factor=1.4))
+    # the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    # specifications_builder.add_company(
+    #     companies.TheScheduler.Data(
+    #         companies.TheScheduler, the_scheduler_fleet, "The Scheduler LP",
+    #         profit_factor=1.4))
 
     sim = environment.generate_simulation(
         specifications_builder,

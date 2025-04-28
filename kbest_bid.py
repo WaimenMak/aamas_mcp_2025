@@ -118,9 +118,12 @@ class KBestBidComanyn(TradingCompany):
                         # Check time in the innermost loop
                         if time.time() - start_execution_time > 50:
                             break
-                        
-                        new_schedule_vessel_insertion = new_schedule_vessel.copy()
-                        new_schedule_vessel_insertion.add_transportation(trade, i, j)
+                        try:
+                            new_schedule_vessel_insertion = new_schedule_vessel.copy()
+                            new_schedule_vessel_insertion.add_transportation(trade, i, j)
+                        except Exception as e:
+                            print(f"Error insert: {e}")
+                            continue
                         
                         if new_schedule_vessel_insertion.verify_schedule():
                             if len(new_schedule_vessel_insertion.get_simple_schedule()) % 2 != 0:

@@ -23,8 +23,7 @@ module load miniconda3
 conda activate aamas
 cd ${HOME}/Devs/aamas
 echo "Current working directory: $(pwd)"
-#python main.py --mode ood --file dcrnn
 
 #python ./baselines/GATRNN.py
-python run_experiments.py --mode=subset
-
+#python run_experiments.py --mode=subset
+python examples.py

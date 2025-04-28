@@ -36,7 +36,7 @@ class GreedyComanyn(TradingCompany):
         best_insertion_pickup_index = None
         best_insertion_dropoff_index = None
         start_time = trades[0].time
-
+    
         for t, trade in enumerate(trades):
             if trade in scheduled_trades:
                 continue
@@ -59,13 +59,14 @@ class GreedyComanyn(TradingCompany):
                 vessel_best_dropoff = None
                 
                 for i in range(1, len(insertion_points)+1):
-                    if len(insertion_points) > 1:
-                        pass
                     for j in range(i, len(insertion_points)+1):
-                        new_schedule_vessel_insertion = new_schedule_vessel.copy()
-                        # try to add trade to vessel schedule with all possible insertion points
-                        new_schedule_vessel_insertion.add_transportation(trade, i, j)
-                            
+                        try:
+                            new_schedule_vessel_insertion = new_schedule_vessel.copy()
+                            # try to add trade to vessel schedule with all possible insertion points
+                            new_schedule_vessel_insertion.add_transportation(trade, i, j)
+                        except Exception as e:
+                            print(f"Error insert: {e}")
+                            continue
                         # if new_schedule_vessel_insertion.verify_schedule_cargo():
                         if new_schedule_vessel_insertion.verify_schedule():
                             if len(new_schedule_vessel_insertion.get_simple_schedule()) % 2 != 0:
@@ -104,7 +105,7 @@ class GreedyComanyn(TradingCompany):
         # Check if we found a feasible assignment
         if best_trade is not None and best_vessel is not None:
             # Optional: Update the vessel's schedule with the best trade found
-            best_vessel_schedule = schedules.get(best_vessel, best_vessel.schedule)
+            best_vessel_schedule = schedules.get(best_vessel, best_vessel.schedule).copy()
             best_vessel_schedule.add_transportation(best_trade, best_insertion_pickup_index, best_insertion_dropoff_index)
             # schedules[best_vessel] = best_vessel.schedule
             # schedules[best_vessel] = best_vessel_schedule
@@ -194,6 +195,7 @@ class GreedyComanyn(TradingCompany):
                         costs[trade] = trade_specific_costs[trade] * self._profit_factor
                     else:
                         costs[trade] = trade_specific_costs[trade] * 1.3
+            return ScheduleProposal(schedules, scheduled_trades, costs)
         
         # for vessel in self._fleet:
         #     if vessel in schedules:
