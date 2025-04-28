@@ -195,6 +195,7 @@ class KBestBidComanyn(TradingCompany):
 
             time_end = time.time()
             if time_end - start_execution_time > self.runtime_limit:
+                print(f"Time limit reached after generating {k}/{kbest} schedules")
                 break
         time_end = time.time()
         print(f"Time taken: {time_end - start_execution_time} seconds")
