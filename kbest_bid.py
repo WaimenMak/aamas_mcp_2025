@@ -81,7 +81,7 @@ class KBestBidComanyn(TradingCompany):
         #     profit_factor = fields.Float(default=1.65)
 
 
-    def kbest_schedule(self, trades, fleets, headquarters, start_execution_time, payment_per_trade=None):
+    def kbest_schedule(self, trades, fleets, headquarters, start_execution_time, num_current_solutions, payment_per_trade=None):
         # Add timer to track execution time
         
         best_vessel = None
@@ -159,7 +159,7 @@ class KBestBidComanyn(TradingCompany):
                                 # *** Pruning Check ***
                                 # If the best cost for *this* vessel is already worse than the threshold,
                                 # stop searching further insertion points for this vessel.
-                                if min_cost_for_vessel > pruning_threshold:
+                                if min_cost_for_vessel > pruning_threshold and num_current_solutions >= 5:
                                     stop_searching_this_vessel = True
                                     break # break j loop
                     # Break i loop if flagged by time limit or pruning check
@@ -211,7 +211,7 @@ class KBestBidComanyn(TradingCompany):
         for k in range(kbest):
             random.shuffle(trades)
             # schedules = {}
-            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, start_execution_time)
+            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, start_execution_time, len(k_best_schedules))
             # record the cost of the schedule
             if len(schedule) > 0:
                 k_best_schedules.append(schedule)
@@ -382,7 +382,7 @@ class KBestBidComanyn(TradingCompany):
         for k in range(kbest):
             random.shuffle(trades)
             # schedules = {}
-            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, start_execution_time, payment_per_trade)
+            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, start_execution_time, len(k_best_schedules), payment_per_trade)
             if len(schedule) > 0:
                 k_best_schedules.append(schedule)
             end_time = time.time()
