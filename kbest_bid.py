@@ -122,7 +122,7 @@ class KBestBidComanyn(TradingCompany):
                             new_schedule_vessel_insertion = new_schedule_vessel.copy()
                             new_schedule_vessel_insertion.add_transportation(trade, i, j)
                         except Exception as e:
-                            print(f"Error insert: {e}")
+                            print(f"company {self.__class__.__name__} Error insert: {e}")
                             continue
                         
                         if new_schedule_vessel_insertion.verify_schedule():
@@ -137,7 +137,7 @@ class KBestBidComanyn(TradingCompany):
                                     payment_per_trade
                                 )
                             except Exception as e:
-                                print(f"Error simulating schedule cost: {e}")
+                                print(f"company {self.__class__.__name__} Error simulate schedule cost: {e}")
                                 continue
                             if current_cost < min_cost_for_vessel:
                                 min_cost_for_vessel = current_cost
