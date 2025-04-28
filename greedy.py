@@ -68,6 +68,8 @@ class GreedyComanyn(TradingCompany):
                             
                         # if new_schedule_vessel_insertion.verify_schedule_cargo():
                         if new_schedule_vessel_insertion.verify_schedule():
+                            if len(new_schedule_vessel_insertion.get_simple_schedule()) % 2 != 0:
+                                continue
                             current_cost, idle_time, pickup, dropoff = simulate_schedule_cost(
                                 vessel, 
                                 new_schedule_vessel_insertion,
@@ -172,21 +174,26 @@ class GreedyComanyn(TradingCompany):
 
         #simulate cost with connection cost and accurately calculate the shared cost
         for vessel, schedule in schedules.items():
-            trip_cost, trade_specific_costs, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(vessel, schedule, start_time, self._headquarters)
-            for trade in schedule.get_scheduled_trades():
-                # calculate absolute cost
-                travel_distance = self._headquarters.get_network_distance(trade.origin_port, trade.destination_port)
-                travel_time = vessel.get_travel_time(travel_distance)
-                travel_cost = vessel.get_laden_consumption(travel_time, vessel.speed)
-                loading_time = vessel.get_loading_time(trade.cargo_type, trade.amount)
-                loading_cost = vessel.get_loading_consumption(loading_time)
-                unloading_cost = vessel.get_unloading_consumption(loading_time)
-                absolute_cost = loading_cost + unloading_cost + travel_cost
-                # costs[trade] = trade_specific_costs[trade] * self._profit_factor
-                if trade_specific_costs[trade] < absolute_cost:
-                    costs[trade] = trade_specific_costs[trade] * self._profit_factor
-                else:
-                    costs[trade] = trade_specific_costs[trade] * 1.3
+            if schedule.verify_schedule():
+                try:
+                    trip_cost, trade_specific_costs, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(vessel, schedule, start_time, self._headquarters)
+                except Exception as e:
+                    print(f"Error simulating schedule cost: {e}")
+                    continue
+                for trade in schedule.get_scheduled_trades():
+                    # calculate absolute cost
+                    travel_distance = self._headquarters.get_network_distance(trade.origin_port, trade.destination_port)
+                    travel_time = vessel.get_travel_time(travel_distance)
+                    travel_cost = vessel.get_laden_consumption(travel_time, vessel.speed)
+                    loading_time = vessel.get_loading_time(trade.cargo_type, trade.amount)
+                    loading_cost = vessel.get_loading_consumption(loading_time)
+                    unloading_cost = vessel.get_unloading_consumption(loading_time)
+                    absolute_cost = loading_cost + unloading_cost + travel_cost
+                    # costs[trade] = trade_specific_costs[trade] * self._profit_factor
+                    if trade_specific_costs[trade] < absolute_cost:
+                        costs[trade] = trade_specific_costs[trade] * self._profit_factor
+                    else:
+                        costs[trade] = trade_specific_costs[trade] * 1.3
         
         # for vessel in self._fleet:
         #     if vessel in schedules:

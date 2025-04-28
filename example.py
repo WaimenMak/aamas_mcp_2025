@@ -13,7 +13,7 @@ import kbest_bid
 
 
 def build_specification():
-    number_of_month = 24
+    number_of_month = 12
     trades_per_auction = 20
     num = 2 # number of vessels per fleet
     specifications_builder = environment.get_specification_builder(
@@ -42,18 +42,18 @@ def build_specification():
     specifications_builder.add_company(kbest_bid.KBestBidComanyn.Data(kbest_bid.KBestBidComanyn, my_fleet, kbest_bid.KBestBidComanyn.__name__, profit_factor=1.4))
 
     # arch enemy
-    # arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    # specifications_builder.add_company(
-    #     companies.MyArchEnemy.Data(
-    #         companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
-    #         profit_factor=1.5))
+    arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    specifications_builder.add_company(
+        companies.MyArchEnemy.Data(
+            companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
+            profit_factor=1.5))
 
     # scheduler fleet
-    # the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    # specifications_builder.add_company(
-    #     companies.TheScheduler.Data(
-    #         companies.TheScheduler, the_scheduler_fleet, "The Scheduler LP",
-    #         profit_factor=1.4))
+    the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    specifications_builder.add_company(
+        companies.TheScheduler.Data(
+            companies.TheScheduler, the_scheduler_fleet, "The Scheduler LP",
+            profit_factor=1.4))
 
     sim = environment.generate_simulation(
         specifications_builder,

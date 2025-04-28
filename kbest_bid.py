@@ -102,8 +102,8 @@ class KBestBidComanyn(TradingCompany):
 
             for v, vessel in enumerate(fleets):
                 # Check time again for nested loop
-                if time.time() - start_execution_time > 50:
-                    break
+                # if time.time() - start_execution_time > 50:
+                #     break
                 
                 current_vessel_schedule = schedules.get(vessel, vessel.schedule)
                 new_schedule_vessel = current_vessel_schedule.copy()
@@ -125,27 +125,30 @@ class KBestBidComanyn(TradingCompany):
                         if new_schedule_vessel_insertion.verify_schedule():
                             if len(new_schedule_vessel_insertion.get_simple_schedule()) % 2 != 0:
                                 continue
-
-                            current_cost, _, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
-                                vessel,
-                                new_schedule_vessel_insertion,
-                                start_time,
-                                headquarters,
-                                payment_per_trade
-                            )
+                            try:
+                                current_cost, _, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
+                                    vessel,
+                                    new_schedule_vessel_insertion,
+                                    start_time,
+                                    headquarters,
+                                    payment_per_trade
+                                )
+                            except Exception as e:
+                                print(f"Error simulating schedule cost: {e}")
+                                continue
                             if current_cost < min_cost_for_vessel:
                                 min_cost_for_vessel = current_cost
                                 vessel_best_insertion_pick_up = i
                                 vessel_best_insertion_drop_off = j
 
-                if time.time() - start_execution_time > 50:
-                    break
+                # if time.time() - start_execution_time > 50:
+                #     break
 
-            if min_cost_for_vessel < min_cost_for_all_vessels:
-                min_cost_for_all_vessels = min_cost_for_vessel
-                current_best_vessel = vessel
-                current_best_insertion_pickup = vessel_best_insertion_pick_up
-                current_best_insertion_dropoff = vessel_best_insertion_drop_off
+                if min_cost_for_vessel < min_cost_for_all_vessels:
+                    min_cost_for_all_vessels = min_cost_for_vessel
+                    current_best_vessel = vessel
+                    current_best_insertion_pickup = vessel_best_insertion_pick_up
+                    current_best_insertion_dropoff = vessel_best_insertion_drop_off
 
             if current_best_vessel is not None:
                 best_vessel = current_best_vessel
@@ -185,8 +188,9 @@ class KBestBidComanyn(TradingCompany):
             # record the cost of the schedule
             if len(schedule) > 0:
                 k_best_schedules.append(schedule)
-                schedule_cost = get_costs_for_schedule(schedule, self._fleet, self._headquarters, start_time)
-                k_best_schedule_costs.append(schedule_cost)
+                # optional: calculate the cost of the schedule
+                # schedule_cost = get_costs_for_schedule(schedule, self._fleet, self._headquarters, start_time)
+                # k_best_schedule_costs.append(schedule_cost)
 
             time_end = time.time()
             if time_end - time_start > 55: # 50 seconds timeout
@@ -237,7 +241,15 @@ class KBestBidComanyn(TradingCompany):
 
             # for the trades that are not scheduled, bid with high profit factor
             for trade in rejected_trades:
-                costs[trade] = absolute_cost * 2
+                # calculate the absolute cost of the trade OD
+                travel_distance = self._headquarters.get_network_distance(trade.origin_port, trade.destination_port)
+                travel_time = self._fleet[0].get_travel_time(travel_distance)
+                travel_cost = self._fleet[0].get_laden_consumption(travel_time, self._fleet[0].speed)
+                loading_time = self._fleet[0].get_loading_time(trade.cargo_type, trade.amount)
+                loading_cost = self._fleet[0].get_loading_consumption(loading_time)
+                unloading_cost = self._fleet[0].get_unloading_consumption(loading_time)
+                absolute_cost = loading_cost + unloading_cost + travel_cost
+                costs[trade] = absolute_cost * 10
                 scheduled_trades.append(trade)
 
         # return ScheduleProposal(schedules, scheduled_trades, costs)
