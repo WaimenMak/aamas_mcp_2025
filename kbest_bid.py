@@ -37,7 +37,7 @@ class KBestBidComanyn(TradingCompany):
     def __init__(self, fleet, name, profit_factor=1.65, profit_factor_2=1.2, 
                  avg_w=0.7, cal_efficiency=False, schedule_with_greedy=False,
                  efficiency_selection_percentage=0.8, trade_frequency_threshold=0.5, 
-                 k_best=110, runtime_limit=55, pruning_factor=1):
+                 k_best=110, runtime_limit=57, pruning_factor=1.2):
         super().__init__(fleet, name)
         # --- hyper-parameters ---
         self._profit_factor = profit_factor
@@ -64,8 +64,8 @@ class KBestBidComanyn(TradingCompany):
         efficiency_selection_percentage: float = 0.8
         trade_frequency_threshold: float = 0.5
         k_best: int = 110
-        runtime_limit: int = 55
-        pruning_factor: float = 1
+        runtime_limit: int = 57
+        pruning_factor: float = 1.2
         class Schema(TradingCompany.Data.Schema):
             profit_factor = fields.Float(default=1.65)
             profit_factor_2 = fields.Float(default=1.2)
@@ -75,8 +75,8 @@ class KBestBidComanyn(TradingCompany):
             efficiency_selection_percentage = fields.Float(default=0.8)
             trade_frequency_threshold = fields.Float(default=0.5)
             k_best = fields.Integer(default=110)
-            runtime_limit = fields.Integer(default=55)
-            pruning_factor = fields.Float(default=1)
+            runtime_limit = fields.Integer(default=57)
+            pruning_factor = fields.Float(default=1.2)
         # class Schema(TradingCompany.Data.Schema):
         #     profit_factor = fields.Float(default=1.65)
 
