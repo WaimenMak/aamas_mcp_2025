@@ -43,7 +43,6 @@ class KBestBidComanyn(TradingCompany):
         self._profit_factor = profit_factor
         self._profit_factor_2 = profit_factor_2
         self.avg_w = avg_w
-        # self.abs_w = abs_w
         self.cal_efficiency = cal_efficiency
         self.schedule_with_greedy = schedule_with_greedy
         self.efficiency_selection_percentage = efficiency_selection_percentage
@@ -80,35 +79,32 @@ class KBestBidComanyn(TradingCompany):
 
 
     def kbest_schedule(self, trades, fleets, headquarters, payment_per_trade=None):
-
-        # min_cost_for_trades = float('inf')
-        # best_trade = None
+        # Add timer to track execution time
+        start_execution_time = time.time()
+        
         best_vessel = None
-        # best_pickup_time = None
-        # best_dropoff_time = None
         best_insertion_pickup_index = None
         best_insertion_dropoff_index = None
         start_time = trades[0].time
         # This dictionary holds the schedules *being built* during this specific function call only.
         schedules = {}
-        # for v, vessel in enumerate(fleets):
-        #     if len(vessel.schedule.get_simple_schedule()) == 3:
-        #         pass
+        
         for t, trade in enumerate(trades):
-            # if trade in scheduled_trades:
-            #     continue
+            # Check if time limit is about to be exceeded
+            if time.time() - start_execution_time > 49:  # Use 49 to leave room for cleanup
+                print(f"Time limit reached after processing {t}/{len(trades)} trades")
+                break
+            
             min_cost_for_all_vessels = float('inf')
             current_best_vessel = None
-            # current_best_pickup = None
-            # current_best_dropoff = None
             current_best_insertion_pickup = None
             current_best_insertion_dropoff = None
 
             for v, vessel in enumerate(fleets):
-                # if start_time == 720:
-                #     pass
-                # if len(vessel.schedule.get_simple_schedule()) == 1:
-                #     pass
+                # Check time again for nested loop
+                if time.time() - start_execution_time > 50:
+                    break
+                
                 current_vessel_schedule = schedules.get(vessel, vessel.schedule)
                 new_schedule_vessel = current_vessel_schedule.copy()
                 insertion_points = new_schedule_vessel.get_insertion_points()
@@ -116,24 +112,20 @@ class KBestBidComanyn(TradingCompany):
                 min_cost_for_vessel = float('inf')
                 vessel_best_insertion_pick_up = None
                 vessel_best_insertion_drop_off = None
-                # vessel_best_pickup = None
-                # vessel_best_dropoff = None
 
                 for i in range(1, len(insertion_points)+1):
                     for j in range(i, len(insertion_points)+1):
+                        # Check time in the innermost loop
+                        if time.time() - start_execution_time > 50:
+                            break
+                        
                         new_schedule_vessel_insertion = new_schedule_vessel.copy()
-                        # try to add trade to vessel schedule with all possible insertion points
-                        # if len(new_schedule_vessel_insertion.get_simple_schedule()) == 1:
-                        #     pass
                         new_schedule_vessel_insertion.add_transportation(trade, i, j)
-                        # if len(new_schedule_vessel_insertion.get_simple_schedule()) == 3:
-                        #     pass
-                        # if new_schedule_vessel_insertion.verify_schedule_cargo():
+                        
                         if new_schedule_vessel_insertion.verify_schedule():
                             if len(new_schedule_vessel_insertion.get_simple_schedule()) % 2 != 0:
                                 continue
 
-                            # scheduled_trades = new_schedule_vessel_insertion.get_scheduled_trades()
                             current_cost, _, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
                                 vessel,
                                 new_schedule_vessel_insertion,
@@ -145,21 +137,17 @@ class KBestBidComanyn(TradingCompany):
                                 min_cost_for_vessel = current_cost
                                 vessel_best_insertion_pick_up = i
                                 vessel_best_insertion_drop_off = j
-                                # vessel_best_pickup = pickup
-                                # vessel_best_dropoff = dropoff
 
+                if time.time() - start_execution_time > 50:
+                    break
 
-                if min_cost_for_vessel < min_cost_for_all_vessels:
-                    min_cost_for_all_vessels = min_cost_for_vessel
-                    current_best_vessel = vessel
-                    # current_best_pickup = vessel_best_pickup
-                    # current_best_dropoff = vessel_best_dropoff
-                    current_best_insertion_pickup = vessel_best_insertion_pick_up
-                    current_best_insertion_dropoff = vessel_best_insertion_drop_off
+            if min_cost_for_vessel < min_cost_for_all_vessels:
+                min_cost_for_all_vessels = min_cost_for_vessel
+                current_best_vessel = vessel
+                current_best_insertion_pickup = vessel_best_insertion_pick_up
+                current_best_insertion_dropoff = vessel_best_insertion_drop_off
 
             if current_best_vessel is not None:
-                # if current_best_vessel == fleets[1] and start_time == 720:
-                #     pass
                 best_vessel = current_best_vessel
                 best_insertion_pickup_index = current_best_insertion_pickup
                 best_insertion_dropoff_index = current_best_insertion_dropoff
@@ -167,7 +155,11 @@ class KBestBidComanyn(TradingCompany):
                 best_vessel_schedule.add_transportation(trade, best_insertion_pickup_index, best_insertion_dropoff_index)
                 schedules[best_vessel] = best_vessel_schedule
 
-
+        # Final check of execution time
+        execution_time = time.time() - start_execution_time
+        if execution_time > 50:
+            print(f"Warning: kbest_schedule exceeded time limit: {execution_time:.2f} seconds")
+        
         return schedules
 
     def propose_schedules(self, trades):
@@ -177,7 +169,6 @@ class KBestBidComanyn(TradingCompany):
         costs = {}
         scheduled_trades = []
         rejection_threshold = 1000000
-        rejected_trades = []
         pick_up_time = {}
         drop_off_time = {}
         start_time = trades[0].time
@@ -220,8 +211,9 @@ class KBestBidComanyn(TradingCompany):
             k_best_schedules = k_best_schedules[:int(len(k_best_schedules)*self.efficiency_selection_percentage)]
         # ----- end of optional -----
 
+        # bid based on the average cost of the k best schedules
         if len(k_best_schedules) != 0:
-            trade_frequencies, trade_avg_costs = self.calculate_trade_frequency_and_avg_cost(
+            trade_frequencies, trade_avg_costs, rejected_trades = self.calculate_trade_frequency_and_avg_cost(
                 k_best_schedules,
                 len(k_best_schedules),
                 self.trade_frequency_threshold,
@@ -242,6 +234,10 @@ class KBestBidComanyn(TradingCompany):
                 else:
                     costs[trade] = bid_price * self._profit_factor_2
                 scheduled_trades.append(trade)
+
+            # for the trades that are not scheduled, bid with high profit factor
+            for trade in rejected_trades:
+                costs[trade] = absolute_cost * 2
 
 
         # return ScheduleProposal(schedules, scheduled_trades, costs)
@@ -274,6 +270,8 @@ class KBestBidComanyn(TradingCompany):
         trade_appearances = {}
         # Dictionary to track the total cost for each trade across all appearances
         trade_total_costs = {}
+        # rejected trades
+        rejected_trades = []
         # For each k-best schedule
         for k in range(kbest):
             # Track all trades in this schedule and their costs
@@ -316,8 +314,10 @@ class KBestBidComanyn(TradingCompany):
             if trade_frequencies[trade] >= frequency_threshold:
                 # Calculate average cost for this trade
                 trade_avg_costs[trade] = trade_total_costs[trade] / appearances
+            else:
+                rejected_trades.append(trade)
 
-        return trade_frequencies, trade_avg_costs
+        return trade_frequencies, trade_avg_costs, rejected_trades
 
 
     def schedule_trades(self, trades, payment_per_trade):
