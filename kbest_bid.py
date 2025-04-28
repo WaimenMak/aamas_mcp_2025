@@ -37,7 +37,7 @@ class KBestBidComanyn(TradingCompany):
     def __init__(self, fleet, name, profit_factor=1.65, profit_factor_2=1.2, 
                  avg_w=0.7, cal_efficiency=False, schedule_with_greedy=False,
                  efficiency_selection_percentage=0.8, trade_frequency_threshold=0.5, 
-                 k_best=110, runtime_limit=55):
+                 k_best=110, runtime_limit=55, pruning_factor=1):
         super().__init__(fleet, name)
         # --- hyper-parameters ---
         self._profit_factor = profit_factor
@@ -49,6 +49,7 @@ class KBestBidComanyn(TradingCompany):
         self.trade_frequency_threshold = trade_frequency_threshold
         self.k_best = k_best
         self.runtime_limit = runtime_limit
+        self.pruning_factor = pruning_factor
         # --- end of hyper-parameters ---
         self.total_cost_until_now = 0
         self.total_idle_time = 0
@@ -64,6 +65,7 @@ class KBestBidComanyn(TradingCompany):
         trade_frequency_threshold: float = 0.5
         k_best: int = 110
         runtime_limit: int = 55
+        pruning_factor: float = 1
         class Schema(TradingCompany.Data.Schema):
             profit_factor = fields.Float(default=1.65)
             profit_factor_2 = fields.Float(default=1.2)
@@ -74,6 +76,7 @@ class KBestBidComanyn(TradingCompany):
             trade_frequency_threshold = fields.Float(default=0.5)
             k_best = fields.Integer(default=110)
             runtime_limit = fields.Integer(default=55)
+            pruning_factor = fields.Float(default=1)
         # class Schema(TradingCompany.Data.Schema):
         #     profit_factor = fields.Float(default=1.65)
 
@@ -99,6 +102,10 @@ class KBestBidComanyn(TradingCompany):
             current_best_insertion_pickup = None
             current_best_insertion_dropoff = None
 
+            # Define a relative pruning factor (e.g., 1.5 means stop if vessel cost is 50% worse than the best found so far)
+            # This could be made a class parameter if needed
+            PRUNING_FACTOR = self.pruning_factor
+
             for v, vessel in enumerate(fleets):
                 # Check time again for nested loop
                 # if time.time() - start_execution_time > 50:
@@ -111,11 +118,17 @@ class KBestBidComanyn(TradingCompany):
                 min_cost_for_vessel = float('inf')
                 vessel_best_insertion_pick_up = None
                 vessel_best_insertion_drop_off = None
+                stop_searching_this_vessel = False # Flag to break outer loop
+
+                # Calculate the pruning threshold based on the best cost found in *previous* vessels
+                # Only prune if a cost has actually been found (min_cost_for_all_vessels is not inf)
+                pruning_threshold = min_cost_for_all_vessels * PRUNING_FACTOR if min_cost_for_all_vessels != float('inf') else float('inf')
 
                 for i in range(1, len(insertion_points)+1):
                     for j in range(i, len(insertion_points)+1):
                         # Check time in the innermost loop
                         if time.time() - start_execution_time > self.runtime_limit:
+                            stop_searching_this_vessel = True # Mark to break outer loops
                             break
                         try:
                             new_schedule_vessel_insertion = new_schedule_vessel.copy()
@@ -143,9 +156,21 @@ class KBestBidComanyn(TradingCompany):
                                 vessel_best_insertion_pick_up = i
                                 vessel_best_insertion_drop_off = j
 
+                                # *** Pruning Check ***
+                                # If the best cost for *this* vessel is already worse than the threshold,
+                                # stop searching further insertion points for this vessel.
+                                if min_cost_for_vessel > pruning_threshold:
+                                    stop_searching_this_vessel = True
+                                    break # break j loop
+                    # Break i loop if flagged by time limit or pruning check
+                    if stop_searching_this_vessel or time.time() - start_execution_time > self.runtime_limit:
+                        break
+
+                # Break vessel loop if time limit reached
                 if time.time() - start_execution_time > self.runtime_limit:
                     break
 
+                # Update the overall best cost if this vessel provided a better one
                 if min_cost_for_vessel < min_cost_for_all_vessels:
                     min_cost_for_all_vessels = min_cost_for_vessel
                     current_best_vessel = vessel
@@ -173,6 +198,7 @@ class KBestBidComanyn(TradingCompany):
         #         pass
         costs = {}
         scheduled_trades = []
+        rejected_trades = []
         rejection_threshold = 1000000
         pick_up_time = {}
         drop_off_time = {}
@@ -361,6 +387,7 @@ class KBestBidComanyn(TradingCompany):
                 k_best_schedules.append(schedule)
             end_time = time.time()
             if end_time - start_execution_time > self.runtime_limit:
+                print(f"In schedule_trades: Time limit reached after generating {k}/{kbest} schedules")
                 break
 
         # choose the minimum cost schedule
