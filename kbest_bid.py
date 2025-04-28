@@ -4,12 +4,6 @@
 # @FileName: kbest_bid
 # @Software: PyCharm
 
-# -*- coding: utf-8 -*-
-# @Time    : 23/04/2025 15:54
-# @Author  : mmai
-# @FileName: kbest
-# @Software: PyCharm
-
 from mable.cargo_bidding import TradingCompany
 from mable.examples.companies import ScheduleProposal
 import attrs
@@ -40,20 +34,51 @@ def get_costs_for_schedule(schedule, fleets, headquarters, start_time):
     return schedule_total_cost
 
 class KBestBidComanyn(TradingCompany):
-    def __init__(self, fleet, name, profit_factor=1.65):
+    def __init__(self, fleet, name, profit_factor=1.65, profit_factor_2=1.2, 
+                 avg_w=0.7, abs_w=0.3, cal_efficiency=False, schedule_with_greedy=False,
+                 efficiency_selection_percentage=0.8, trade_frequency_threshold=0.5, 
+                 k_best=110):
         super().__init__(fleet, name)
+        # --- hyper-parameters ---
         self._profit_factor = profit_factor
+        self._profit_factor_2 = profit_factor_2
+        self.avg_w = avg_w
+        # self.abs_w = abs_w
+        self.cal_efficiency = cal_efficiency
+        self.schedule_with_greedy = schedule_with_greedy
+        self.efficiency_selection_percentage = efficiency_selection_percentage
+        self.trade_frequency_threshold = trade_frequency_threshold
+        self.k_best = k_best
+        # --- end of hyper-parameters ---
+        # random.seed(1)
         self.total_cost_until_now = 0
         self.total_idle_time = 0
-        self.k_best = 110
-        # random.seed(1)
 
     @attrs.define
     class Data(TradingCompany.Data):
         profit_factor: float = 1.65
+        profit_factor_2: float = 1.2
+        avg_w: float = 0.7
+        abs_w: float = 0.3
+        cal_efficiency: bool = False
+        schedule_with_greedy: bool = False
+        efficiency_selection_percentage: float = 0.8
+        trade_frequency_threshold: float = 0.5
+        k_best: int = 110
 
         class Schema(TradingCompany.Data.Schema):
             profit_factor = fields.Float(default=1.65)
+            profit_factor_2 = fields.Float(default=1.2)
+            avg_w = fields.Float(default=0.7)
+            abs_w = fields.Float(default=0.3)
+            cal_efficiency = fields.Boolean(default=False)
+            schedule_with_greedy = fields.Boolean(default=False)
+            efficiency_selection_percentage = fields.Float(default=0.8)
+            trade_frequency_threshold = fields.Float(default=0.5)
+            k_best = fields.Integer(default=110)
+
+        # class Schema(TradingCompany.Data.Schema):
+        #     profit_factor = fields.Float(default=1.65)
 
 
     def kbest_schedule(self, trades, fleets, headquarters, payment_per_trade=None):
@@ -182,25 +207,26 @@ class KBestBidComanyn(TradingCompany):
 
         # ----- optional: calculate the efficiency of the k best schedules and sort them in descending order -----
         # calculate the efficiency of the k best schedules and sort them in descending order
-        # k_efficiency = []
-        # for k_schedule in k_best_schedules:
-        #     efficiency = cal_efficiency(k_schedule, self._headquarters, start_time)
-        #     k_efficiency.append(efficiency)
-        # k_best_schedules = [x for _, x in sorted(zip(k_efficiency, k_best_schedules), key=lambda pair: pair[0], reverse=True)]
-        # # get the minimum cost schedule
-        # # if len(k_best_schedule_costs) != 0:
-        # #     min_cost_schedule_index = k_best_schedule_costs.index(min(k_best_schedule_costs))
-        # #     schedules = k_best_schedules[min_cost_schedule_index]
-        # # -- bid based on average cost of k best schedules
-        # # select the first 80% of the schedules according to the efficiency
-        # k_best_schedules = k_best_schedules[:int(len(k_best_schedules)*0.8)]
+        if self.cal_efficiency:
+            k_efficiency = []
+            for k_schedule in k_best_schedules:
+                efficiency = cal_efficiency(k_schedule, self._headquarters, start_time)
+                k_efficiency.append(efficiency)
+            k_best_schedules = [x for _, x in sorted(zip(k_efficiency, k_best_schedules), key=lambda pair: pair[0], reverse=True)]
+            # get the minimum cost schedule
+            # if len(k_best_schedule_costs) != 0:
+            #     min_cost_schedule_index = k_best_schedule_costs.index(min(k_best_schedule_costs))
+            #     schedules = k_best_schedules[min_cost_schedule_index]
+            # -- bid based on average cost of k best schedules
+            # select the first 80% of the schedules according to the efficiency
+            k_best_schedules = k_best_schedules[:int(len(k_best_schedules)*self.efficiency_selection_percentage)]
         # ----- end of optional -----
 
         if len(k_best_schedules) != 0:
             trade_frequencies, trade_avg_costs = self.calculate_trade_frequency_and_avg_cost(
                 k_best_schedules,
                 len(k_best_schedules),
-                0.5,
+                self.trade_frequency_threshold,
                 start_time)
 
             for trade, avg_cost in trade_avg_costs.items():
@@ -212,11 +238,11 @@ class KBestBidComanyn(TradingCompany):
                 loading_cost = self._fleet[0].get_loading_consumption(loading_time)
                 unloading_cost = self._fleet[0].get_unloading_consumption(loading_time)
                 absolute_cost = loading_cost + unloading_cost + travel_cost
-                bid_price = 0.7 * avg_cost + 0.3 * absolute_cost
+                bid_price = self.avg_w * avg_cost + (1 - self.avg_w) * absolute_cost
                 if bid_price < absolute_cost:
                     costs[trade] = bid_price * self._profit_factor
                 else:
-                    costs[trade] = bid_price * 1.2
+                    costs[trade] = bid_price * self._profit_factor_2
                 scheduled_trades.append(trade)
 
 
@@ -228,16 +254,19 @@ class KBestBidComanyn(TradingCompany):
         payment_per_trade = {}
         for one_contract in contracts:
             payment_per_trade[one_contract.trade] = one_contract.payment
-        scheduling_proposal = self.schedule_trades(trades, payment_per_trade)
-        # --- Use GreedyComanyn's propose_schedules logic ---
-        # 1. Create a temporary instance of GreedyComanyn using this company's fleet/hq/etc.
-        #    (Assumes __init__ signatures are compatible or GreedyComanyn doesn't need specific state)
-        # temp_greedy_company = GreedyComanyn(self._fleet, self.name, self._profit_factor)
-        # 2. Set up the headquarters for the temporary instance if needed (standard pattern)
-        # temp_greedy_company._headquarters = self._headquarters
-        # 3. Call the propose_schedules method on the temporary instance
-        # scheduling_proposal = temp_greedy_company.propose_schedules(trades, payment_per_trade)
-        # --- End of Greedy logic usage ---
+
+        if not self.schedule_with_greedy:
+            scheduling_proposal = self.schedule_trades(trades, payment_per_trade)
+        else:
+            # --- Use GreedyComanyn's propose_schedules logic ---
+            # 1. Create a temporary instance of GreedyComanyn using this company's fleet/hq/etc.
+            #    (Assumes __init__ signatures are compatible or GreedyComanyn doesn't need specific state)
+            temp_greedy_company = GreedyComanyn(self._fleet, self.name, self._profit_factor)
+            # 2. Set up the headquarters for the temporary instance if needed (standard pattern)
+            temp_greedy_company._headquarters = self._headquarters
+            # 3. Call the propose_schedules method on the temporary instance
+            scheduling_proposal = temp_greedy_company.propose_schedules(trades, payment_per_trade)
+            # --- End of Greedy logic usage ---
 
         # Apply the schedules using the KBestBidComanyn's own apply_schedules method
         _ = self.apply_schedules(scheduling_proposal.schedules)
