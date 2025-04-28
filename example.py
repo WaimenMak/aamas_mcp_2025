@@ -62,6 +62,13 @@ def build_specification():
             companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.",
             profit_factor=1.5))
 
+    # arch enemy 2
+    arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    specifications_builder.add_company(
+        companies.MyArchEnemy.Data(
+            companies.MyArchEnemy, arch_enemy_fleet, "Arch Enemy Ltd.2",
+            profit_factor=2.0))
+
     # scheduler fleet
     the_scheduler_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
     specifications_builder.add_company(

@@ -454,5 +454,5 @@ def cal_efficiency(schedules, headquarters, start_time):
             actual_costs += actual_cost
             absolute_costs += absolute_cost
 
-    efficiency = actual_costs/absolute_costs
+    efficiency = absolute_cost  / actual_costs
     return efficiency
