@@ -297,11 +297,15 @@ class KBestBidComanyn(TradingCompany):
                 # Add to the set of trades in this schedule
                 trades_in_schedule.update(scheduled_trades)
                 # Calculate costs for these trades
-                trip_cost, trade_specific_costs, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
-                    vessel,
-                    schedule,
-                    start_time,
-                    self._headquarters)
+                try:
+                    trip_cost, trade_specific_costs, _, _, _ = simulate_schedule_cost_allocated_shared_arrival(
+                        vessel,
+                        schedule,
+                        start_time,
+                        self._headquarters)
+                except Exception as e:
+                    print(f"Error calculate_trade_frequency_and_avg_cost: {e}")
+                    continue
                 total_cost += trip_cost
                 # record the cost for each trade
                 for trade, cost in trade_specific_costs.items():
