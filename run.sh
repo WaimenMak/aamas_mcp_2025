@@ -26,4 +26,4 @@ echo "Current working directory: $(pwd)"
 
 #python ./baselines/GATRNN.py
 #python run_experiments.py --mode=subset
-python examples.py
+python example.py

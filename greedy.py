@@ -12,21 +12,21 @@ import time
 from utils import simulate_schedule_cost_allocated_shared_arrival, simulate_schedule_cost
 
 class GreedyComanyn(TradingCompany):
-    def __init__(self, fleet, name, profit_factor=1.65):
+    def __init__(self, fleet, name, profit_factor=1.65, runtime_limit=55):
         super().__init__(fleet, name)
         self._profit_factor = profit_factor
         self.total_cost_until_now = 0
         self.total_idle_time = 0
-
+        self.runtime_limit = runtime_limit
     @attrs.define
     class Data(TradingCompany.Data):
         profit_factor: float = 1.65
-
+        runtime_limit: int = 55
         class Schema(TradingCompany.Data.Schema):
             profit_factor = fields.Float(default=1.65)
+            runtime_limit = fields.Integer(default=55)
 
-
-    def greedy_schedule(self, trades, fleets, schedules, scheduled_trades, headquarters, payments=None):
+    def greedy_schedule(self, trades, fleets, schedules, scheduled_trades, headquarters, start_execution_time, payments=None):
 
         min_cost_for_trades = float('inf')
         best_trade = None
@@ -38,6 +38,8 @@ class GreedyComanyn(TradingCompany):
         start_time = trades[0].time
     
         for t, trade in enumerate(trades):
+            if time.time() - start_execution_time > self.runtime_limit:
+                break
             if trade in scheduled_trades:
                 continue
             min_cost_for_all_vessels = float('inf')
@@ -57,9 +59,11 @@ class GreedyComanyn(TradingCompany):
                 vessel_best_insertion_drop_off = None
                 vessel_best_pickup = None
                 vessel_best_dropoff = None
-                
+
                 for i in range(1, len(insertion_points)+1):
                     for j in range(i, len(insertion_points)+1):
+                        if time.time() - start_execution_time > self.runtime_limit:
+                            break
                         try:
                             new_schedule_vessel_insertion = new_schedule_vessel.copy()
                             # try to add trade to vessel schedule with all possible insertion points
@@ -143,7 +147,7 @@ class GreedyComanyn(TradingCompany):
         pick_up_time = {}
         drop_off_time = {}
         start_time = trades[0].time
-        time_start = time.time()
+        start_execution_time = time.time()
         while len(scheduled_trades) < len(trades):
             # if len(rejected_trades) > 1:
             #     pass
@@ -156,6 +160,7 @@ class GreedyComanyn(TradingCompany):
                         schedules, 
                         scheduled_trades, 
                         self._headquarters,
+                        start_execution_time,
                         payment_per_trade
                     )
                     if cost_trade > rejection_threshold:
@@ -168,7 +173,7 @@ class GreedyComanyn(TradingCompany):
                     drop_off_time[trade] = best_dropoff_time[trade]
                     # costs[trade] = cost_trade * self._profit_factor  # naive calculate the cost based on travel time
             time_end = time.time()
-            if time_end - time_start > 3 or last_rejected_trade == current_trade:
+            if time_end - start_execution_time > self.runtime_limit or last_rejected_trade == current_trade:
             # if last_rejected_trade == current_trade:
                 break
         # print(f"Time taken: {time_end - time_start} seconds")

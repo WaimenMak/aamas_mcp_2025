@@ -11,7 +11,7 @@ from marshmallow import fields
 import time
 import random
 from utils import simulate_schedule_cost_allocated_shared_arrival, simulate_schedule_cost, cal_efficiency
-random.seed(1)
+# random.seed(1)
 from greedy import GreedyComanyn # Added alias if needed
 
 def get_costs_for_schedule(schedule, fleets, headquarters, start_time):
@@ -37,7 +37,7 @@ class KBestBidComanyn(TradingCompany):
     def __init__(self, fleet, name, profit_factor=1.65, profit_factor_2=1.2, 
                  avg_w=0.7, cal_efficiency=False, schedule_with_greedy=False,
                  efficiency_selection_percentage=0.8, trade_frequency_threshold=0.5, 
-                 k_best=110):
+                 k_best=110, runtime_limit=55):
         super().__init__(fleet, name)
         # --- hyper-parameters ---
         self._profit_factor = profit_factor
@@ -48,8 +48,8 @@ class KBestBidComanyn(TradingCompany):
         self.efficiency_selection_percentage = efficiency_selection_percentage
         self.trade_frequency_threshold = trade_frequency_threshold
         self.k_best = k_best
+        self.runtime_limit = runtime_limit
         # --- end of hyper-parameters ---
-        # random.seed(1)
         self.total_cost_until_now = 0
         self.total_idle_time = 0
 
@@ -63,7 +63,7 @@ class KBestBidComanyn(TradingCompany):
         efficiency_selection_percentage: float = 0.8
         trade_frequency_threshold: float = 0.5
         k_best: int = 110
-
+        runtime_limit: int = 55
         class Schema(TradingCompany.Data.Schema):
             profit_factor = fields.Float(default=1.65)
             profit_factor_2 = fields.Float(default=1.2)
@@ -73,14 +73,13 @@ class KBestBidComanyn(TradingCompany):
             efficiency_selection_percentage = fields.Float(default=0.8)
             trade_frequency_threshold = fields.Float(default=0.5)
             k_best = fields.Integer(default=110)
-
+            runtime_limit = fields.Integer(default=55)
         # class Schema(TradingCompany.Data.Schema):
         #     profit_factor = fields.Float(default=1.65)
 
 
-    def kbest_schedule(self, trades, fleets, headquarters, payment_per_trade=None):
+    def kbest_schedule(self, trades, fleets, headquarters, start_execution_time, payment_per_trade=None):
         # Add timer to track execution time
-        start_execution_time = time.time()
         
         best_vessel = None
         best_insertion_pickup_index = None
@@ -91,7 +90,7 @@ class KBestBidComanyn(TradingCompany):
         
         for t, trade in enumerate(trades):
             # Check if time limit is about to be exceeded
-            if time.time() - start_execution_time > 49:  # Use 49 to leave room for cleanup
+            if time.time() - start_execution_time > self.runtime_limit:  
                 print(f"Time limit reached after processing {t}/{len(trades)} trades")
                 break
             
@@ -116,7 +115,7 @@ class KBestBidComanyn(TradingCompany):
                 for i in range(1, len(insertion_points)+1):
                     for j in range(i, len(insertion_points)+1):
                         # Check time in the innermost loop
-                        if time.time() - start_execution_time > 50:
+                        if time.time() - start_execution_time > self.runtime_limit:
                             break
                         try:
                             new_schedule_vessel_insertion = new_schedule_vessel.copy()
@@ -144,8 +143,8 @@ class KBestBidComanyn(TradingCompany):
                                 vessel_best_insertion_pick_up = i
                                 vessel_best_insertion_drop_off = j
 
-                # if time.time() - start_execution_time > 50:
-                #     break
+                if time.time() - start_execution_time > self.runtime_limit:
+                    break
 
                 if min_cost_for_vessel < min_cost_for_all_vessels:
                     min_cost_for_all_vessels = min_cost_for_vessel
@@ -163,7 +162,7 @@ class KBestBidComanyn(TradingCompany):
 
         # Final check of execution time
         execution_time = time.time() - start_execution_time
-        if execution_time > 50:
+        if execution_time > self.runtime_limit:
             print(f"Warning: kbest_schedule exceeded time limit: {execution_time:.2f} seconds")
         
         return schedules
@@ -178,16 +177,15 @@ class KBestBidComanyn(TradingCompany):
         pick_up_time = {}
         drop_off_time = {}
         start_time = trades[0].time
-        time_start = time.time()
+        start_execution_time = time.time()
         k_best_schedules = []
         k_best_schedule_costs = []
         kbest = self.k_best
         # shuffle the trades and generate kbest schedules
-        time_start = time.time()
         for k in range(kbest):
             random.shuffle(trades)
             # schedules = {}
-            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters)
+            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, start_execution_time)
             # record the cost of the schedule
             if len(schedule) > 0:
                 k_best_schedules.append(schedule)
@@ -196,10 +194,10 @@ class KBestBidComanyn(TradingCompany):
                 # k_best_schedule_costs.append(schedule_cost)
 
             time_end = time.time()
-            if time_end - time_start > 55: # 50 seconds timeout
+            if time_end - start_execution_time > self.runtime_limit:
                 break
         time_end = time.time()
-        print(f"Time taken: {time_end - time_start} seconds")
+        print(f"Time taken: {time_end - start_execution_time} seconds")
 
         # ----- optional: calculate the efficiency of the k best schedules and sort them in descending order -----
         # calculate the efficiency of the k best schedules and sort them in descending order
@@ -353,14 +351,15 @@ class KBestBidComanyn(TradingCompany):
         k_best_schedules = []
         kbest = self.k_best
         start_time = trades[0].time
+        start_execution_time = time.time()
         for k in range(kbest):
             random.shuffle(trades)
             # schedules = {}
-            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, payment_per_trade)
+            schedule = self.kbest_schedule(trades, self._fleet, self._headquarters, start_execution_time, payment_per_trade)
             if len(schedule) > 0:
                 k_best_schedules.append(schedule)
             end_time = time.time()
-            if end_time - start_time > 55:
+            if end_time - start_execution_time > self.runtime_limit:
                 break
 
         # choose the minimum cost schedule

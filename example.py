@@ -13,8 +13,8 @@ import kbest_bid
 
 
 def build_specification():
-    number_of_month = 24
-    trades_per_auction = 20
+    number_of_month = 1
+    trades_per_auction = 50
     num = 2 # number of vessels per fleet
     specifications_builder = environment.get_specification_builder(
         trades_per_occurrence=trades_per_auction,
