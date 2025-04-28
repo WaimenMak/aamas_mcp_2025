@@ -238,7 +238,7 @@ class KBestBidComanyn(TradingCompany):
             # for the trades that are not scheduled, bid with high profit factor
             for trade in rejected_trades:
                 costs[trade] = absolute_cost * 2
-
+                scheduled_trades.append(trade)
 
         # return ScheduleProposal(schedules, scheduled_trades, costs)
         return ScheduleProposal({}, scheduled_trades, costs)
