@@ -35,7 +35,7 @@ def get_costs_for_schedule(schedule, fleets, headquarters, start_time):
 
 class KBestBidComanyn(TradingCompany):
     def __init__(self, fleet, name, profit_factor=1.4, profit_factor_2=1.2,
-                 avg_w=0.7, cal_efficiency=False, schedule_with_greedy=False,
+                 avg_w=0.7, cal_efficiency=True, schedule_with_greedy=False,
                  efficiency_selection_percentage=0.8, trade_frequency_threshold=0.5, 
                  k_best=110, runtime_limit=57, pruning_factor=1.2):
         super().__init__(fleet, name)
@@ -59,7 +59,7 @@ class KBestBidComanyn(TradingCompany):
         profit_factor: float = 1.4
         profit_factor_2: float = 1.2
         avg_w: float = 0.7
-        cal_efficiency: bool = False
+        cal_efficiency: bool = True
         schedule_with_greedy: bool = False
         efficiency_selection_percentage: float = 0.8
         trade_frequency_threshold: float = 0.5

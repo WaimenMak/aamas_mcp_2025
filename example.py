@@ -20,10 +20,6 @@ def build_specification():
         trades_per_occurrence=trades_per_auction,
         num_auctions=number_of_month)
 
-    # group7
-    my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
-    specifications_builder.add_company(group7.Company7.Data(group7.Company7, my_fleet, group7.Company7.__name__))
-
     # solver
     # my_fleet = fleets.mixed_fleet(num_suezmax=1, num_aframax=1, num_vlcc=1)
     # specifications_builder.add_company(groupn.OurCompanyn.Data(groupn.OurCompanyn, my_fleet, groupn.OurCompanyn.__name__, profit_factor=1.5))
@@ -54,6 +50,10 @@ def build_specification():
         k_best=110,                             # number of best schedules to consider
         runtime_limit=57,                       # runtime limit
         pruning_factor=1.2))                      # pruning factor
+
+    # group7
+    my_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
+    specifications_builder.add_company(group7.Company7.Data(group7.Company7, my_fleet, group7.Company7.__name__))
 
     # arch enemy
     arch_enemy_fleet = fleets.mixed_fleet(num_suezmax=num, num_aframax=num, num_vlcc=num)
