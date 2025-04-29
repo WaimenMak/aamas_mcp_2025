@@ -34,7 +34,7 @@ def get_costs_for_schedule(schedule, fleets, headquarters, start_time):
     return schedule_total_cost
 
 class KBestBidComanyn(TradingCompany):
-    def __init__(self, fleet, name, profit_factor=1.65, profit_factor_2=1.2, 
+    def __init__(self, fleet, name, profit_factor=1.4, profit_factor_2=1.2,
                  avg_w=0.7, cal_efficiency=False, schedule_with_greedy=False,
                  efficiency_selection_percentage=0.8, trade_frequency_threshold=0.5, 
                  k_best=110, runtime_limit=57, pruning_factor=1.2):
@@ -56,7 +56,7 @@ class KBestBidComanyn(TradingCompany):
 
     @attrs.define
     class Data(TradingCompany.Data):
-        profit_factor: float = 1.65
+        profit_factor: float = 1.4
         profit_factor_2: float = 1.2
         avg_w: float = 0.7
         cal_efficiency: bool = False
@@ -67,7 +67,7 @@ class KBestBidComanyn(TradingCompany):
         runtime_limit: int = 57
         pruning_factor: float = 1.2
         class Schema(TradingCompany.Data.Schema):
-            profit_factor = fields.Float(default=1.65)
+            profit_factor = fields.Float(default=1.4)
             profit_factor_2 = fields.Float(default=1.2)
             avg_w = fields.Float(default=0.7)
             cal_efficiency = fields.Boolean(default=False)
