@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --mail-type=end
-#SBATCH --time=5:00:00
 # std oupt
 #SBATCH -o log.o
 
@@ -10,8 +9,8 @@
 
 #SBATCH --time=010:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem-per-cpu=1G
+#SBATCH --cpus-per-task=8
+#SBATCH --mem-per-cpu=2G
 #SBATCH --account="research-ceg-tp"
 
 

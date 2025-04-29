@@ -5,7 +5,6 @@
 # @Software: PyCharm
 from collections import defaultdict
 
-
 def simulate_schedule_cost_allocated_shared_arrival(vessel, vessel_schedule_copy, start_time, headquarters=None, payments=None):
     """
     Simulates a vessel's schedule, allocating travel costs to a port among
@@ -41,27 +40,6 @@ def simulate_schedule_cost_allocated_shared_arrival(vessel, vessel_schedule_copy
     current_time = float(start_time)
     current_port = vessel.location
     trades_on_board = set()
-
-    # Optional sorting (same as before) - important for grouping logic
-    # try:
-    #     # Add handling for None time_window during sorting
-    #     def sort_key(item):
-    #         event_type, trade = item
-    #         if trade.time_window is None:
-    #             # If no time window, treat as unbounded for sorting
-    #             return (float('-inf'), float('inf'))
-    #         if event_type == 'PICK_UP':
-    #             return (trade.time_window[0], trade.time_window[1])
-    #         else: # DROP_OFF
-    #             return (trade.time_window[2], trade.time_window[3])
-    #
-    #     vessel_schedule.sort(key=sort_key)
-    # except AttributeError:
-    #     print("Warning: Could not sort vessel schedule based on time windows (AttributeError).")
-    #     pass
-    # except IndexError:
-    #     print("Warning: Could not sort vessel schedule based on time windows (IndexError - possibly incomplete time_window).")
-    #     pass
 
     processed_indices = set()
     current_schedule_index = 0
@@ -454,5 +432,5 @@ def cal_efficiency(schedules, headquarters, start_time):
             actual_costs += actual_cost
             absolute_costs += absolute_cost
 
-    efficiency = absolute_cost  / actual_costs
+    efficiency = absolute_costs/actual_costs
     return efficiency
