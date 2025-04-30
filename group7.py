@@ -661,7 +661,8 @@ class Company7(TradingCompany):
                 absolute_cost = loading_cost + unloading_cost + travel_cost
                 bid_price = self.avg_w * avg_cost + (1 - self.avg_w) * absolute_cost
                 if bid_price < absolute_cost:
-                    costs[trade] = bid_price * self._profit_factor
+                    # costs[trade] = bid_price * self._profit_factor
+                    costs[trade] = bid_price * ((absolute_cost - bid_price)/absolute_cost * (1.65 - self._profit_factor) + self._profit_factor)
                 else:
                     costs[trade] = bid_price * self._profit_factor_2
                 scheduled_trades.append(trade)
